@@ -1,0 +1,81 @@
+<!-- Main Content-->
+<div class="page-body">
+    <%- include('../partials/nav') %>
+    <div class="container-fluid">
+        <div class="mt-2 mb-2"><%- include('../partials/messages') %></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card p-4">
+                    <form action="/admin-roles" method="post">
+                        <div class="mb-3">
+                            <div class="row align-items-baseline mt-3">
+                                <div class="col-lg-6">
+                                    <div class="inner__border">
+                                        <label class="col-form-label">Name</label>
+                                        <span style="color: red">*</span>                            
+                                        <input type="text" class="form-control name" id="name" value="<%= inputData && inputData.name ? inputData.name : typeof (data) != "undefined" ? data.name : '' %>" name="name" maxlength="50" required />
+                                    </div>
+                                </div>
+                        
+                                <div class="col-lg-6">
+                                    <div class="inner__border">
+                                        <label class="col-form-label"> Slug</label>
+                                        <span style="color: red">*</span>
+                                        <input type="text" class="form-control slug" id="slug" name="slug" value="<%= inputData && inputData.slug ? inputData.slug : typeof (data) != "undefined" ?  data.slug : '' %>" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <hr />
+                        <!-- Row -->
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="my-1"><b>Permissions</b> <span style="color: red">*</span></p>
+                                <div class="row">
+                                    <% for (const key in permission) { %>
+                                    <div class="col-sm-12 permission-title">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input module" id="<%= key  %>" type="checkbox"
+                                            value="<%=  key  %>" data-module="<%=  key  %>"
+                                            >
+                                            <label class="form-check-label" for="<%= key  %>"><%= (key).toUpperCase().replace(/-/g, ' ' ); %></label>
+                                        </div>
+                                    </div>
+
+                                    <% for (const key1 in permission[key]) { %>
+                                    <div class="col-sm-4 <%= permission[key][key1].module %>" >
+                                        <div class="form-check mb-0" style="margin-left: 24px">
+                                            <input class="form-check-input permission" id="<%= permission[key][key1].slug  %>" type="checkbox"
+                                                value="<%= permission[key][key1].slug  %>"
+                                                name="permission"
+                                                data-module="<%=  permission[key][key1].module  %>"
+                                            >
+                                            <label class="form-check-label sub-module permission" for="<%= permission[key][key1].slug %>"><%= permission[key][key1].name %></label>
+                                        </div>
+                                    </div>
+                                    <% } %> 
+                                <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Row -->
+
+                        <div class="d-flex justify-content-end" >
+                            <button class="btn btn-primary me-2 px-3 submit" type="submit">Save</button>
+                            <a  href="/admin-roles"  role="button">
+                            <button class="btn btn-light px-3" type="button">
+                                Cancel
+                                </button>
+                                </a>
+                        </div>
+                                
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Main Content-->

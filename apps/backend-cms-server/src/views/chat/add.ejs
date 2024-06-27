@@ -1,0 +1,210 @@
+<div class="page-body">
+    <%- include('../partials/nav') %>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="mt-2 mb-2"><%- include('../partials/messages') %></div>
+        <div class="row">
+            <div class="col-sm-12 col-xl-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="/admins" method="post" class="theme-form mega-form" enctype="multipart/form-data" autocomplete="off">
+                                    <div class="mb-3">
+                                        <div class="row align-items-baseline mt-3">
+                                            <div class="col-lg-6">
+                                                <div class="inner__border">
+                                                    <label class="col-form-label">First Name</label>
+                                                    <span style="color: red">*</span>
+                                                    <input type="text" class="form-control " name="first_name" value="<%= inputData && inputData.first_name ? inputData.first_name : '' %>" required />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="inner__border">
+                                                    <label class="col-form-label">Last Name</label>
+                                                    <span style="color: red">*</span>
+                                                    <input type="text" class="form-control" name="last_name" value="<%= inputData && inputData.last_name ? inputData.last_name : '' %>" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <div class="row align-items-baseline mt-3">
+                                            <div class="col-lg-6">
+                                                <div class="inner__border">
+                                                    <label class="col-form-label">Email</label>
+                                                    <span style="color: red">*</span>
+                                                    <input type="email" class="form-control " name="email" value="<%= inputData && inputData.email ? inputData.email : '' %>" required/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="inner__border">
+                                                    <label class="col-form-label">Username</label>
+                                                    <span style="color: red">*</span>
+                                                    <input type="text" class="form-control" name="username"
+                                                    value="<%= inputData && inputData.username ? inputData.username : '' %>"
+                                                    required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <div class="row align-items-baseline mt-3">
+                                            <div class="col-lg-6">
+                                                <div class="inner__border">
+                                                    <label class="col-form-label">Mobile No</label>
+                                                    <span style="color: red">*</span>
+                                                    <input type="tel" class="form-control onlynum" name="mobile_num"
+                                                    maxlength="13"
+                                                    value="<%= inputData && inputData.mobile_num ? inputData.mobile_num : '' %>"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="inner__border">
+                                                    <label class="col-form-label">Telephone No</label>
+                                                    <input type="tel" class="form-control onlynum"
+                                                    name="contact_number" maxlength="13"
+                                                    value="<%= inputData && inputData.contact_number ? inputData.contact_number : '' %>"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script>
+                                            function isNumberKey(evt){
+                                            var charCode = (evt.which) ? evt.which : evt.keyCode;
+                                            if (charCode != 46 && charCode != 45 && charCode > 31
+                                            && (charCode < 48 || charCode > 57))
+                                            return false;
+                                
+                                             return true;
+                                            }
+                                        </script>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <div class="row align-items-baseline mt-3">
+                                            <div class="col-lg-6">
+                                                <div class="inner__border">
+                                                    <label class="col-form-label">Fax</label>
+                                                    <input type="tel" class="form-control onlynumIncludeDash" name="fax" maxlength="13" value="<%= inputData && inputData.fax ? inputData.fax : '' %>" />
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-lg-6">
+                                                <div class="inner__border">
+                                                    <label class="col-form-label">Image (Upto 2mb)</label>
+                                                    <input class="form-control" type="file" id="image" name="image" style="padding: 4px;" accept="image/png, image/jpeg, image/jpg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <div class="row align-items-baseline mt-3">
+                                            <div class="col-lg-6">
+                                                <div class="inner__border">
+                                                    <label class="col-form-label">Role</label>
+                                                    <span style="color: red">*</span>
+                                                    <select multiple class="form-control select2"  name="role_id" required>
+                                                                <% roles.forEach(function(role) { %>
+                                                                    <option value="<%= role.id %>" <% if(typeof(inputData) !=="undefined" && inputData.role_id && inputData.role_id.toString().includes(role.id)){ %> selected<% } %> > 
+                                                                        <%= role.name %>
+                                                                    </option>
+                                                                <% }); %>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            
+                                            <div class="col-lg-6">
+                                                <div class="inner__border">
+                                                    <label class="col-form-label">Password Method</label>
+                                                    <div class="col-sm-9">
+                                                        <div class="form-check radio radio-primary">
+                                                            <input class="form-check-input" type="radio" id="is_password" class="form-check-input passwordMethodRadio" value="is_password" name="password_method" checked>
+                                                            <label class="form-check-label" for="is_password">Set Password</label>
+                                                        </div>
+                                                        
+                                                        <div class="form-check radio radio-primary">
+                                                            <input class="form-check-input passwordMethodRadio" type="radio" id="is_activation_link" name="password_method"value="is_activation_link">
+                                                            <label class="form-check-label text-nowrap" for="is_activation_link">Send Activation Link</label>
+                                                        </div>
+                                                    </div>
+                                                </div>                                          
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <div class="row align-items-baseline mt-3">
+                                            <div class="col-lg-6">
+                                                <div class="inner__border">
+                                                    <label class="col-form-label">Status</label>
+                                                        <div class="col-sm-9">
+                                                            <div class="form-check radio radio-primary">
+                                                                <input class="form-check-input" type="radio" id="active" name="status" value="active" checked>
+                                                                <label class="form-check-label" for="active">Active</label>
+                                                            </div>
+                                                            <div class="form-check radio radio-primary">
+                                                                <input class="form-check-input" type="radio" id="inactive" name="status" value="inactive">
+                                                                <label class="form-check-label" for="inactive">Inactive</label>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6" id="passwordField">
+                                                <div class="inner__border">
+                                                    <label class="col-form-label">Password</label>
+                                                    <span style="color: red">*</span>
+                                                    <input type="password" class="form-control" id="password"name="password" value="<%= inputData && inputData.password ? inputData.password: '' %>" minlength="<%= getCmsConfig(configData,'Minimum Password Length') %>" required>
+                                                </div>
+                                            </div>  
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                            <div class="col-lg-6">
+                                                <div class="inner__border">
+                                                    <label class="col-form-label">Remarks</label>
+                                                    <textarea name="remarks" id="" class="form-control" style="height: 100px;"><%= inputData && inputData.remarks ? inputData.remarks : '' %></textarea>
+                                                </div>
+                                            </div>
+                                    </div>
+
+
+                                
+                                    <div id="app">
+                                        <Hello/>
+                                    </div>
+                                    
+                                    
+                                    <div class="d-flex justify-content-end" >
+                                        <button class="btn btn-primary me-2 px-3 submit" type="submit">Save</button>
+                                        <a  href="/admins"  role="button">
+                                            <button class="btn btn-light px-3" type="button">
+                                                Cancel
+                                            </button>
+                                        </a>
+                                    </div>
+
+                                </form>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/admins.js"></script>
+<script src="/vue/js/app.js"></script>
+
+
+

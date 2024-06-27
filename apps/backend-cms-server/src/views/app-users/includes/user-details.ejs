@@ -1,0 +1,45 @@
+<div class="col-sm-12 col-md-6 col-xl-6 mb-4">
+    <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center pb-0">
+        <h5><i class="fa fa-user pe-2"></i>User Details</h5>
+    </div>
+    <div class="card-body" >
+        <div class="project-box vertical-scroll scroll-demo mb-0">
+            <div class="row details">
+                <div class="col-6 p-1"><strong>Signedup Date </strong></div>
+                <div class="col-6 p-1"><%=userData?.created_at? formatDate(userData.created_at, "YYYY-MM-DD HH:mm") : nil%> </div>
+                <div class="col-6 p-1"><strong>Full Name </strong></div>
+                <div class="col-6 p-1"><%=userData?.full_name? userData?.full_name : nil%> </div>
+                <div class="col-6 p-1"> <strong>Email</strong></div>
+                <div class="col-6 p-1"><%=userData?.email  ? userData?.email : nil %> </div>
+                <div class="col-6 p-1"> <strong>Phone Number</strong></div>
+                <div class="col-6 p-1"><%=userData?.mobile_num  ? userData?.mobile_num : nil%> </div>
+                <div class="col-6 p-1"> <strong>Address</strong></div>
+                <div class="col-6 p-1"><%=userData?.address_name ? userData?.address_name : nil%> </div>
+                <div class="col-6 p-1"> <strong>Province</strong></div>
+                <div class="col-6 p-1"><%=userData?.localGovData?.province_en ? userData?.localGovData?.province_en: nil%></div>
+                <div class="col-6 p-1"> <strong>District</strong></div>
+                <div class="col-6 p-1"><%=userData?.localGovData?.district_en ? userData?.localGovData?.district_en : nil%></div>
+                <div class="col-6 p-1"> <strong>Local Government</strong></div>
+                <div class="col-6 p-1"><%=userData?.localGovData?.local_government_en ? userData?.localGovData?.local_government_en: nil%></div>
+                <div class="col-6 p-1"> <strong>Ward No</strong></div>
+                <div class="col-6 p-1"><%=userData?.ward_no ? userData?.ward_no: nil%></div>
+                <div class="col-6 p-1"> <strong>Locality</strong></div>
+                <div class="col-6 p-1"><%=userData?.locality ? userData?.locality: nil%></div>
+                <div class="col-6 p-1"> <strong>Street Name</strong></div>
+                <div class="col-6 p-1"><%=userData?.street_name ? userData?.street_name: nil%></div>
+                <div class="col-6 p-1"> <strong>House No</strong></div>
+                <div class="col-6 p-1"><%=userData?.house_no ? userData?.house_no: nil%></div>
+                <div class="col-6 p-1"> <strong>Image</strong></div>
+                <div class="col-6 p-1">
+                    <img height="100px" src="<%=userData?.image ? '/api/uploads/apiusers/'+userData.image : '/backend/asset-cms/images/bod-no-image.png' %>" alt="No image">                                                               
+                </div>
+                <div class="col-6 p-1"> <strong>Default Payment Gateway</strong></div>
+                <div class="col-6 p-1">
+                    <img height="75px" src="<%=userData?.paymentData?.image ? '/backend/uploads/payments/'+userData.paymentData.image : '/backend/asset-cms/images/no-image.png' %>" alt="No image">                                                               
+                </div>
+            </div>
+          </div>
+    </div>
+    </div>
+</div>

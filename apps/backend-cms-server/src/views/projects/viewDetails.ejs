@@ -1,0 +1,62 @@
+<div class="page-body">
+    <%- include('../partials/nav') %>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="mt-2 mb-2"><%- include('../partials/messages') %></div>
+        <div class="row">
+
+            <div class="col-sm-12 col-md-12 col-xl-12 mb-4">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center pb-0">
+                        <h5><i class="fa fa-file"></i> Project Detail</h5>   
+                        <h5><a
+                                class="text-uppercase btn btn-primary btn-sm p-1"
+                                href="/projects/<%= docs._id %>"
+                                role="button"
+                                ><i class="icofont icofont-eye"></i>View Transaction Log
+                            </a>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="project-box mb-0">
+                          <% if (docs) { %>
+                            <div class="row details">
+                                    <div class="col-6 p-1"><strong> Name </strong></div>
+                                    <div class="col-6 p-1"><%=docs?.project_title ? docs.project_title : nil%> </div>
+                                    <div class="col-6 p-1"><strong>Merchant Name </strong></div>
+                                    <div class="col-6 p-1"><%=docs?.merchantData?.full_name ? docs.merchantData?.full_name : nil%> </div>
+
+                                    <div class="col-6 p-1"><strong>Email </strong></div>
+                                    <div class="col-6 p-1"><%=docs?.email ? docs.email : nil%> </div>
+                                    <div class="col-6 p-1"><strong>Remarks </strong></div>
+                                    <div class="col-6 p-1"><%=docs?.remarks ? docs.remarks : nil%> </div>
+                                    <div class="col-6 p-1"><strong>Website Url </strong></div>
+                                    <div class="col-6 p-1"><%=docs?.website_url ? docs.website_url : nil%> </div>
+                                    <div class="col-6 p-1"><strong>Ipn URL </strong></div>
+                                    <div class="col-6 p-1"><%=docs?.ipn_url ? docs.ipn_url : nil%> </div>
+                                    <div class="col-6 p-1"><strong>Return Url </strong></div>
+                                    <div class="col-6 p-1"><%=docs?.return_url ? docs.return_url : nil%> </div>
+                                    <div class="col-6 p-1"><strong>Cancel Url </strong></div>
+                                    <div class="col-6 p-1"><%=docs?.cancel_url ? docs.cancel_url : nil%> </div>
+                                    <div class="col-6 p-1"><strong>Gateway Image </strong></div>
+                                    <div class="col-6 p-1"><img class="" style="width: 80px;" src="<%=docs.vProjectPaymentGatewayData?.[0]?.image?  '/backend/asset-cms/images/'+ docs?.vProjectPaymentGatewayData?.[0]?.image : '/backend/asset-cms/images/no-image.png' %>" itemprop="thumbnail" alt="No image"> </div>
+                                          
+                                    <div class="col-6 p-1"><strong>Merchant Gateway Name </strong></div>
+                                    <div class="col-6 p-1"><%=docs.vProjectPaymentGatewayData?.[0].gateway_title ? docs.vProjectPaymentGatewayData?.[0]?.gateway_title : nil%> </div>
+                                    <div class="col-6 p-1"><strong>status </strong></div>
+                                    <div class="col-6 p-1"><%=docs?.status ? docs.status : nil%> </div>
+                                    <div class="col-6 p-1"><strong>Project Added Date</strong></div>
+                                    <div class="col-6 p-1"><%=docs?.created_at ? formatDate(docs.created_at, "YYYY-MM-DD HH:mm") : nil%> </div>
+                            </div>
+                            <%}%>  
+
+                        </div>
+                    </div>
+                </div> 
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

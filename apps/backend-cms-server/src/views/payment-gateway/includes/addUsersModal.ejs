@@ -1,0 +1,22 @@
+<div class="modal fade" id="changeStatus-<%= gateway._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><%= gateway.title %> - Status change remark</h5>
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/payment-gateways/change-status/<%= gateway._id %>" method="POST">
+      <div class="modal-body">
+        <div>
+          Remarks
+        </div>
+        <textarea name="remarks" id="" cols="60" rows="2"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary me-2 px-3 " type="submit">Save </button>
+        <button class="btn btn-light px-3" type="button" data-bs-dismiss="modal">Close</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>

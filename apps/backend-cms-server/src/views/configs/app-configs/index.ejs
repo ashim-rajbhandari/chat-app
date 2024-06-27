@@ -1,0 +1,293 @@
+<div class="page-body">
+    <%- include ('../../partials/nav') %>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="mt-2 mb-2"><%- include ('../../partials/messages') %></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <% if(checkPermissions(user, "configs.app-configs.sendSms") == true) { %>
+                            <form action="/app-configs/send-password-sms" method="post" class="theme-form mega-form">
+                                <div class="mb-3">
+                                    <div class="row align-items-baseline mt-3">
+                                        <div class="col-lg-3">
+                                            <div class="inner__border">
+                                                <label class="col-form-label">Resend Password SMS to Users </label>
+                            
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="inner__border">
+                                                <div class="input-group date" id="dt-minimum" data-target-input="nearest">
+                                                    <input class="form-control digits" type="text" name="daterange2" id="date-range" value=""/>
+                                                    <div class="input-group-text" data-target="#dt-minimum" data-toggle="datetimepicker">
+                                                        <i class="fa fa-calendar"> </i>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="inner__border">
+                                                <button class="btn btn-primary me-2 px-3 submit" id="send-bulk-sms" type="submit">Send SMS</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        <% } %>
+                        <form action="/app-configs/<%=data.id%>?_method=PUT" method="post" class="theme-form mega-form" >
+                            <div class="mb-3">
+                                <div class="row align-items-baseline mt-3">
+                                    <div class="col-lg-3">
+                                        <div class="inner__border">
+                                            <label class="col-form-label">Maintenance Mode</label>
+                        
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="inner__border media-body icon-state">
+                                            <label class="switch">
+                                                <input type="checkbox" name="maintenance_mode" <% if(data.maintenance_mode){%>
+                                                    checked
+                                                    <%}%>
+                                                    ><span class="switch-state icon-state "></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="row align-items-baseline mt-3">
+                                    <div class="col-lg-3">
+                                        <div class="inner__border">
+                                            <label class="col-form-label">Privacy Policy</label>
+                        
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="inner__border">
+                                            <input type="text" class="form-control" name="privacy_link" value="<%= inputData && inputData.privacy_link ? inputData.privacy_link : typeof (data) != "undefined" ? data.privacy_link : '' %>"/>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="row align-items-baseline mt-3">
+                                    <div class="col-lg-3">
+                                        <div class="inner__border">
+                                            <label class="col-form-label">Terms and Conditions</label>
+                        
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="inner__border">
+                                            <input type="text" class="form-control" name="term_link" value="<%= inputData && inputData.term_link ? inputData.term_link : typeof (data) != "undefined" ? data.term_link : '' %>" />                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="row align-items-baseline mt-3">
+                                    <div class="col-lg-3">
+                                        <div class="inner__border">
+                                            <label class="col-form-label">Android App Version</label>
+                        
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="inner__border">
+                                            <input type="text" class="form-control" name="android_app_version" value="<%= inputData && inputData.android_app_version ? inputData.android_app_version : typeof (data) != "undefined" ? data.android_app_version : '' %>" />                                               
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="row align-items-baseline mt-3">
+                                    <div class="col-lg-3">
+                                        <div class="inner__border">
+                                            <label class="col-form-label">Android Description</label>
+                        
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="inner__border">
+                                            <input type="text" class="form-control" name="android_description" value="<%= inputData && inputData.android_description ? inputData.android_description : typeof (data) != "undefined" ? data.android_description : '' %>" />                                               
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="row align-items-baseline mt-3">
+                                    <div class="col-lg-3">
+                                        <div class="inner__border">
+                                            <label class="col-form-label">Android Force Update</label>
+                        
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="inner__border media-body icon-state">
+                                            <label class="switch">
+                                                <input type="checkbox" name="android_force" <% if(data.android_force){%>
+                                                    checked
+                                                    <%}%>><span class="switch-state icon-state "></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="row align-items-baseline mt-3">
+                                    <div class="col-lg-3">
+                                        <div class="inner__border">
+                                            <label class="col-form-label">IOS App Version</label>
+                        
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="inner__border">
+                                            <input type="text" class="form-control" name="ios_app_version" value="<%= inputData && inputData.ios_app_version ? inputData.ios_app_version : typeof (data) != "undefined" ? data.ios_app_version : '' %>" />
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="row align-items-baseline mt-3">
+                                    <div class="col-lg-3">
+                                        <div class="inner__border">
+                                            <label class="col-form-label">IOS Description</label>
+                        
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="inner__border">
+                                            <input type="text" class="form-control" name="ios_description" value="<%= inputData && inputData.ios_description ? inputData.ios_description : typeof (data) != "undefined" ? data.ios_description : '' %>" />
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="row align-items-baseline mt-3">
+                                    <div class="col-lg-3">
+                                        <div class="inner__border">
+                                            <label class="col-form-label">IOS Force Update</label>
+                        
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="inner__border media-body icon-state">
+                                            <label for="ios_force" class="switch">
+                                                <input type="checkbox" id="ios_force" name="ios_force" <% if(data.ios_force){%>
+                                                    checked
+                                                    <%}%>><span class="switch-state icon-state "></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="row align-items-baseline mt-3">
+                                    <div class="col-lg-3">
+                                        <div class="inner__border">
+                                            <label class="col-form-label">Bill History Description(English)</label>
+                        
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="inner__border">
+                                            <input type="text" class="form-control" name="bill_history_description_en" value="<%= inputData && inputData.bill_history_description_en ? inputData.bill_history_description_en : typeof (data) != "undefined" ? data.bill_history_description_en : '' %>" />                                               
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="row align-items-baseline mt-3">
+                                    <div class="col-lg-3">
+                                        <div class="inner__border">
+                                            <label class="col-form-label">Bill History Description(Nepali)</label>
+                        
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="inner__border">
+                                            <input type="text" class="form-control" name="bill_history_description_np" value="<%= inputData && inputData.bill_history_description_np ? inputData.bill_history_description_np : typeof (data) != "undefined" ? data.bill_history_description_np : '' %>" />                                               
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="row align-items-baseline mt-3">
+                                    <div class="col-lg-3">
+                                        <div class="inner__border">
+                                            <label class="col-form-label">Payment Gateway Additional Text</label>
+                        
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="inner__border">
+                                            <input type="text" class="form-control" name="payment_gateway_additional_msg" value="<%= inputData && inputData.payment_gateway_additional_msg ? inputData.payment_gateway_additional_msg : typeof (data) != "undefined" ? data.payment_gateway_additional_msg : '' %>" />                                               
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="row align-items-baseline mt-3">
+                                    <div class="col-lg-3">
+                                        <div class="inner__border">
+                                            <label class="col-form-label">Charging Station App Andriod Download link</label>
+                        
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="inner__border">
+                                            <input type="text" class="form-control" name="charging_station_app_download_link" value="<%= inputData && inputData.charging_station_app_download_link ? inputData.charging_station_app_download_link : typeof (data) != "undefined" ? data.charging_station_app_download_link : '' %>" />                                               
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="row align-items-baseline mt-3">
+                                    <div class="col-lg-3">
+                                        <div class="inner__border">
+                                            <label class="col-form-label">Charging Station App Ios Download link</label>
+                        
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="inner__border">
+                                            <input type="text" class="form-control" name="charging_station_app_download_link_ios" value="<%= inputData && inputData.charging_station_app_download_link_ios ? inputData.charging_station_app_download_link_ios : typeof (data) != "undefined" ? data.charging_station_app_download_link_ios : '' %>" />                                               
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary me-2 px-3 submit" type="submit">Save</button>
+                                <a href="<%-baseUrl%>app-configs" role="button">
+                                    <button class="btn btn-light px-3" type="button">Cancel</button>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+</div>

@@ -1,0 +1,24 @@
+<% if (error_msg && error_msg.length > 0) { %>
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%- error_msg %>
+    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close" data-bs-original-title="" title=""></button>
+</div>
+<% } else if (success_msg && success_msg.length > 0) { %>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%- success_msg %>
+    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close" data-bs-original-title="" title=""></button>
+</div>
+<% } else if (errors && errors.length > 0) { %>
+  
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <% if(errors.length === 1 && errors[0].msg.indexOf("|") >= 0) { %>
+      <span style="white-space: pre-line;"><%= errors[0].msg.split("|").join("\n") %></span>      
+    <% } else { %>
+    <% errors.forEach(function(err, key){ if (err && err.msg) { %>
+      - <%- err.msg %><br />
+      <% } else if (err && Object.keys(err).length > 0) { for (var key in err) { if (err.hasOwnProperty(key)) { %>
+      - <%- err[key]['msg'] %><br />
+      <% } } } }); } %>
+    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close" data-bs-original-title="" title=""></button>
+</div>
+<% } %>

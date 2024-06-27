@@ -1,0 +1,20 @@
+'use strict';
+const sequelizePaginate = require('sequelize-paginate');
+const {
+  attributes
+} = require('../migrations/%migrationName%');
+
+module.exports = (sequelize) => {
+  const modelDefinition = {
+    ...attributes()
+  };
+  const modelOptions = {
+    tableName: '%tableName%',
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
+  };
+
+  const %modelName% = sequelize.define('%modelName%', modelDefinition, modelOptions);
+  sequelizePaginate.paginate(%modelName%);
+  return %modelName%;
+};

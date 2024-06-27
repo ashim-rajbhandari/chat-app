@@ -1,0 +1,4 @@
+{
+  "./apps/**/*.js": ["npm run prettier:write"],
+  "./packages/**/*.js": ["npm run prettier:write"]
+}

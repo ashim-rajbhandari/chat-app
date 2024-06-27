@@ -1,0 +1,83 @@
+<div class="page-body">
+    <%- include('../partials/nav') %>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="mt-2 mb-2"><%- include('../partials/messages') %></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center p-3">
+                        <%- include('./includes/search-form') %>
+
+                    </div>
+                    <div class="table-responsive p-2">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SN</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Transaction Code</th>
+                                    <th scope="col">Merchant Gateway Name</th>
+                                    <th scope="col">Payment Gateway</th>
+                                    <th scope="col">status</th>
+                                    <% if(checkPermissions(user, "transaction-management.transactions.edit") == true ||
+                                    checkPermissions(user, "transaction-management.transactions.delete") == true) { %>
+                                    <th scope="col">Action</th>
+                                    <% } %>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(docs.length > 0){ sn = (pageNum-1) * pageLimit; docs.forEach(function(transaction) { %>
+                                                            <tr>
+                                                                <td scope="row"><%= sn += 1 %></td>
+                                                                <td><%= transaction.product_name ? transaction.product_name : nil %></td>
+                                                                <td><%= transaction.amount ? transaction.amount : nil %></td>
+                                                                <td><%= transaction.transaction_code ? transaction.transaction_code : nil %></td>
+                                                                <td><%= transaction.vProjectPaymentGatewayData?.gateway_title ? transaction.vProjectPaymentGatewayData?.gateway_title : nil %></td>
+                                                                <td>
+                                                                    <img height="75px" src="<%=transaction?.vProjectPaymentGatewayData?.image ? '/backend/asset-cms/images/'+transaction.vProjectPaymentGatewayData?.image : '/backend/asset-cms/images/no-image.png' %>" alt="No image">
+                                                                <td>
+                                                                    <%let btnColor= "btn-danger";
+                                                                    if(transaction.status === 'initiated'){
+                                                                        btnColor = "btn-primary";
+                                                                    }else if(transaction.status === 'cancelled'){
+                                                                        btnColor = "btn-warning";
+                                                                    }else if (transaction.status === 'success') {
+                                                                        btnColor = "btn-success";
+                                                                    }
+                                                                    
+                                                                    %>
+                                                                    <button style="pointer-events: none;" class="btn <%=btnColor%> btn-sm p-1">
+                                                                        <%= transaction.status ? transaction.status : nil %>
+                                                                    </button>
+                                                                    </td>
+                                                                <td>
+                                                                    <% if(checkPermissions(user, "transaction-management.transactions.view-details") == true) { %>
+                                                                        <a
+                                                                            class="text-uppercase btn btn-primary btn-sm p-1"
+                                                                            href="/transactions/<%= transaction._id %>/details"
+                                                                            role="button"
+                                                                            ><i class="icofont icofont-eye"></i>View Details
+                                                                        </a>
+                                                                    <% } %>            
+                                                                </a>
+                                                                </td>
+                                                            </tr>
+                                                            <% }); } else{ %>
+                                                            <tr>
+                                                                <td colspan="8" style="text-align: center">No Records found.</td>
+                                                            </tr>
+                                                            <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mb-3">
+                        <%- include('../partials/pagination') %>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+</div>

@@ -1,0 +1,11 @@
+<% if (error_msg && error_msg.length > 0) { %>
+<div class="alert alert-danger" style="width: 100%;">
+    <p style="margin-bottom: 0px;"><%- error_msg %><a href="#" class="close" data-dismiss="alert"
+            aria-label="close">×</a></p>
+</div>
+<% } else if (success_msg && success_msg.length > 0) {%>
+<div class="alert alert-success" style="width: 100%;">
+    <p style="margin-bottom: 0px;"><%- success_msg %><a href="#" class="close" data-dismiss="alert"
+            aria-label="close">×</a></p>
+</div>
+<% } %>

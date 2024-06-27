@@ -1,0 +1,59 @@
+<div class="sidebar-wrapper"> 
+    <div class="h-100">
+      <div class="logo-wrapper text-center"><a href="/home"><img class="img-fluid for-light" src="/backend/asset-cms/images/ekbana-logo.png" alt=""></a>
+        <div class="back-btn"><i class="fa fa-angle-left"></i></div>
+      </div>
+      <div class="logo-icon-wrapper"><a href="#"><img class="img-fluid" src="/backend/asset-cms/images/ekbana-logo.png" alt=""></a></div>
+      <nav class="sidebar-main h-100">
+        <div id="sidebar-menu">
+          <ul class="sidebar-links" id="simple-bar">
+            <li ></li>
+            <%
+            let checkUrl = url;
+            let match_url = checkUrl.match('^[^?]*')[0];
+            modulePermissions.forEach(function(modulePermission) {
+                let collapsed = 'collapsed';
+                let collapsed_in = '';
+                for (let subPage in modulePermission.subPages) {
+                    if (match_url=='/'+subPage) {
+                        collapsed = '';
+                        collapsed_in = 'in';
+                        break;
+                    }
+                }
+              %>
+              <% if (modulePermission.enableDropdown) { %>
+                <li class="sidebar-list <% if(typeof (previousUrl) !== 'undefined' && match_url !== '/'+modulePermission.id) { %> remove-active <% } %>">
+                  <a href="#" aria-expanded="true" class="sidebar-link sidebar-title">
+                    <i class="far sidemenu-icon <%= modulePermission.icon %>"></i>
+                    <span class="sidemenu-label text-nowrap"> <%=  modulePermission?.title %></span>
+                    <i class="angle fe fe-chevron-right"></i>
+                    </a>
+                    <ul  class="sidebar-submenu" style="display: block;">
+                      <% for (var subPage in modulePermission.subPages) { %>
+                        <%if (checkPermissions(user, `${modulePermission.id}.${subPage}.view`) == true || subPage == "home") {%>
+                            <li>
+                                <a class="nav-sub-link text-nowrap" href="/<%=  subPage %>">
+                                       <%= modulePermission?.subPages?.[subPage] %>
+                                </a>
+                            </li>
+                        <% }%>
+                      <%}%>
+                    </ul>
+                </li>
+
+              <% } else { %>
+
+                  <li class="sidebar-list">
+                        <a href="/<%= modulePermission.id %>" class="sidebar-link sidebar-title">
+                            <i class="sidemenu-icon <%= modulePermission.icon %>"></i>
+                            <span class="sidemenu-label text-nowrap"> <%=  modulePermission.title %> </span>
+                        </a>
+                    </li>
+                  </li>
+              <% }});%>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>

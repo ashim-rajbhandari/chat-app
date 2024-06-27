@@ -1,0 +1,64 @@
+<div class="page-body">
+    <% include ../partials/nav.ejs %>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="mt-2 mb-2"><% include ../partials/messages %></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center p-3"><% include ./includes/search-form %></div>
+                    <div class="table-responsive p-2">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>IP</th>
+                                    <th>Log Date</th>
+                                    <th>User Agent</th>
+                                    <th>Request End Point</th>
+                                    <th>Response Code</th>
+                                    <th>Response Time</th>
+                                    <th>Request Body</th>
+                                    <th style="width: 30px;">Response Body</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(docs.length > 0){ sn = (pageNum-1) * pageLimit; docs.forEach(function(item, index) { %>
+                                <tr>
+                                    <td><%= sn += 1 %></td>
+                                    <td><%= item.ip ? item.ip : '' %></td>
+                                    <td><%= item.created_at ? formatDate(item.created_at,"YYYY/MM/DD HH:mm:ss") : '' %></td>
+                                    <td><%= item.user_agent ? item.user_agent : '' %></td>
+                                    <td><p class="api-logs-endpoint"><%= item.request_end_point ? item.request_end_point : '' %></p></td>
+                                    <td><%= item.response_code ? item.response_code : '' %></td>
+                                    <td><%= item.response_time ? item.response_time + ' ms' : '' %></td>
+                                    <td>
+                                        <div class="api-logs-request">
+                                            <i class="fa fa-clipboard copy-text" data-text-id="text-request-<%=index%>" style="float:right; cursor: pointer" aria-hidden="true"></i>
+                                            <p id="text-request-<%= index%>"><%= item.request_body ? JSON.stringify(item.request_body) : '' %></p></td>
+                                        </div>
+                                    <td>
+                                        <div class="api-logs-response">
+                                            <i class="fa fa-clipboard copy-text" data-text-id="text-response-<%=index%>" style="float:right; cursor: pointer" aria-hidden="true"></i>
+                                            <p id="text-response-<%= index%>"><%= item.response_body ? JSON.stringify(item.response_body) : '' %></p></td>
+                                        </div>
+                                </tr>
+                                <% }); } else{ %>
+                                <tr>
+                                    <td colspan="5" style="text-align: center">No Records found</td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mb-3">
+                        <% include ../partials/pagination%>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+</div>
+
+<script src="/js/copy-text-to-clipboard.js"></script>

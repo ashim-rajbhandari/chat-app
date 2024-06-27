@@ -1,0 +1,167 @@
+    <!-- Bootstrap js-->
+    <script src="/backend/asset-cms/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <!-- feather icon js-->
+    <script src="/backend/asset-cms/js/icons/feather-icon/feather.min.js"></script>
+    <script src="/backend/asset-cms/js/icons/feather-icon/feather-icon.js"></script>
+    <!-- scrollbar js-->
+    <script src="/backend/asset-cms/js/scrollbar/simplebar.js"></script>
+    <script src="/backend/asset-cms/js/scrollbar/custom.js"></script>
+    <!-- Sidebar jquery-->
+    <script src="/backend/asset-cms/js/config.js"></script>
+    <!-- Plugins JS start-->
+    <script src="/backend/asset-cms/js/sidebar-menu.js"></script>
+    <script src="/backend/asset-cms/js/prism/prism.min.js"></script>
+    <script src="/backend/asset-cms/js/clipboard/clipboard.min.js"></script>
+    <script src="/backend/asset-cms/js/custom-card/custom-card.js"></script>
+    <script src="/backend/asset-cms/js/tooltip-init.js"></script>
+    <script src="/backend/asset-cms/js/select2/select2.full.min.js"></script>
+    <script src="/js/system.js"></script>
+    <!-- Remove image ajax script for galleries update module -->
+    <script src="/js/select-2-ajax.js"></script>
+    <script src="/js/global-search.js"></script>
+    <!-- Plugins JS Ends-->
+    <script src="/backend/asset-cms/js/datepicker/daterange-picker/moment.min.js"></script>
+    <script src="/backend/asset-cms/js/datepicker/daterange-picker/daterangepicker.js"></script>
+    <script src="/backend/asset-cms/js/datepicker/daterange-picker/daterange-picker.custom.js"></script>
+    <script src="/backend/asset-cms/js/datepicker/date-picker/datepicker.js"></script>
+    <script src="/backend/asset-cms/js/datepicker/date-picker/datepicker.en.js"></script>
+    <script src="/backend/asset-cms/js/datepicker/date-picker/datepicker.custom.js"></script>
+    <script src="/backend/asset-cms/js/dropzone/dropzone.js"></script>
+    <script src="/backend/asset-cms/js/dropzone/dropzone-script.js"></script>
+    <script src="/backend/asset-cms/js/scrollable/perfect-scrollbar.min.js"></script>
+    <script src="/backend/asset-cms/js/scrollable/scrollable-custom.js"></script>
+    <script src="/backend/asset-cms/js/photoswipe/photoswipe.min.js"></script>
+    <script src="/backend/asset-cms/js/photoswipe/photoswipe-ui-default.min.js"></script>
+    <script src="/backend/asset-cms/js/photoswipe/photoswipe.js"></script>
+    <!-- Theme js-->
+    <script src="/backend/asset-cms/js/script.js"></script>
+    <script src="/backend/toast/jquery.toast.min.js"></script>
+<script>
+        $( document ).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'XSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        });
+        
+        $(document).ajaxError(function (event, jqXHR,) {
+            if (jqXHR.status === 401) {
+                window.location.href = "/login"
+            }
+        });
+
+        let successMsg = JSON.parse(`<%- JSON.stringify(typeof success_msg_toast !== "undefined" ? success_msg_toast : "") %>`); 
+        if(successMsg.length >0 ){
+            $.toast({
+            heading: 'success',
+            text: success[0],
+            showHideTransition: 'plain',
+            icon: 'success',
+            position: 'top-right',
+        });
+    }
+
+    let galleryId = $("#galleryId").data('id')?.toString();
+    const setup = {
+        url:'/galleries',
+        method: "post",
+        id: "myDropzone",
+        mode: "create"
+    }
+    if(galleryId){
+        setup.url = "/galleries/" + galleryId,
+        setup.method = "put",
+        setup.id =  "myDropzoneEdit",
+        setup.mode =  "update"
+    }
+    Dropzone.options[setup.id]= {
+    url: setup.url,
+    paramName: "file",
+    thumbnailWidth: 100,
+    thumbnailHeight: 100,
+    method: setup.method,
+    autoProcessQueue: false,
+    uploadMultiple: true,
+    parallelUploads: 50,
+    maxFiles: 50, 
+    maxFilesize: 10, //MB
+    acceptedFiles: 'image/*',
+    addRemoveLinks: true,
+
+    init: function() {
+        let errorState = false;
+        dzClosure = this; 
+        const submitAllBtn = document.getElementById("submit-all");
+        submitAllBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            let title = jQuery('#title').val();
+            if(title === '') {
+                $.toast({
+                    heading: 'Error',
+                    text: "Title is a required field.",
+                    showHideTransition: 'plain',
+                    icon: 'error',
+                    position: 'bottom-center'
+                });
+                return
+            }
+            $.ajax({
+                url: `/galleries/unique-title`,
+                data: { title, mode: setup.mode, id: galleryId },
+                method: 'get',
+                async: false,
+                error: function(err) {
+                    errorState = true
+                    $.toast({
+                        heading: 'Error',
+                        text: err.responseText,
+                        showHideTransition: 'plain',
+                        icon: 'error',
+                        position: 'bottom-center'
+                    }); 
+            }});
+            if(errorState){
+                errorState=false;
+                return;
+            }
+            if(!galleryId && dzClosure.getQueuedFiles().length === 0){
+                $.toast({
+                    heading: 'Error',
+                    text: "Select at least one image file.",
+                    showHideTransition: 'plain',
+                    icon: 'error',
+                    position: 'bottom-center'
+                });
+                return;
+            }
+
+            if (galleryId && dzClosure.getQueuedFiles().length === 0) {
+                var blob = new Blob();
+                blob.upload = { 'chunked': null };
+                dzClosure.uploadFile(blob);
+                window.location.href = ("/galleries/" + galleryId);
+                return;
+            }
+             
+            dzClosure.processQueue();
+        });
+
+        //send all the form data along with the files:
+        this.on("sendingmultiple", function(data, xhr, formData) {
+            formData.append("title", jQuery("#title").val());
+        });
+    },
+
+    success: function(file) {
+        if (file.previewElement) {
+            window.location.replace(setup.url);
+            return;
+        }
+    }
+}
+</script>

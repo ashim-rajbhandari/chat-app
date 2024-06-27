@@ -1,0 +1,108 @@
+<div class="page-body">
+    <% include ../partials/nav.ejs %>
+    
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="mt-2 mb-2"><% include ../partials/messages %></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header p-3">
+                        <% include ./includes/index-search-form %> 
+                    </div>
+                    <div class="table-responsive p-2">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>Full Name</th>
+                                    <th>Verification Status</th>
+                                    <th>Signup Date</th>
+                                    <th>Account Status</th>
+                                    <th>Last Active Date</th>
+                                    <th>Status</th>
+                                    <% if(checkPermissions(user, "app-users.app-users.edit") == true || checkPermissions(user, "app-users.app-users.viewUserDetails") == true ) { %>
+                                    <th scope="col">Action</th>
+                                    <% } %>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(docs.length > 0){ sn = (pageNum-1) * pageLimit; docs.forEach(function(info) { %>
+                                <tr>
+                                    <td scope="row"><%= sn += 1 %></td>
+                                    <td><%= info.full_name ? info.full_name : nil %></td>
+                                    <td><%= info.verified ? 'Verified' : 'un-verified' %></td>
+                                    <td><%= info.created_at ? formatDate(info.created_at, "YYYY-MM-DD HH:mm") :nil %></td>
+                                    <td><%= info.account_status ? info.account_status : nil %></td>
+                                    <td><%= info.last_active_date ? formatDate(info.last_active_date) : nil %></td>
+                                    <td>
+                                        <% 
+                                        const buttonPayload = {
+                                            color: 'btn-danger',
+                                            text: 'Deactivate'
+                                        }
+                                        if(info.status){
+                                            buttonPayload['color'] = 'btn-success';
+                                            buttonPayload['text'] = 'Activate' 
+                                        }
+                                        %>
+                                        <a class="btn <%= buttonPayload.color %> btn-sm p-1"  style="cursor: <%=checkPermissions(user, 'app-users.app-users.edit') == true ? 'pointer' : 'not-allowed' %> "
+                                            href= <%=checkPermissions(user, "app-users.app-users.edit") == true ? `/app-users/change-status/${info._id}` : "#" %>>
+                                            <%= buttonPayload.text %>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <% if(checkPermissions(user, "app-users.app-users.viewUserDetails") == true ) { %>
+                                            <a class="btn btn-primary btn-sm p-1 me-2"
+                                                href="/app-users/user-details/<%= info._id %>" role="button">
+                                                <i class="icofont icofont-eye-alt"></i>
+                                                    View Details
+                                            </a> 
+                                        <% } %>
+                                        <% if(checkPermissions(user, "app-users.app-users.edit") == true) { %>
+                                            <a class="btn btn-light btn-sm p-1 me-2"
+                                            href="/app-users/reset-password/<%= info._id %>"
+                                            role="button">
+                                            <i class="fa fa-edit"></i>
+                                                Reset Password
+                                            </a> 
+                                              <button class="btn btn-light btn-sm p-1 me-2" type="button" data-bs-toggle="modal" 
+                                                                    data-bs-target="#meterCount-<%=info.id%>" ><i class="fa fa-edit"></i>Edit </button>
+                                            <% include ./includes/changeCountModal %> 
+                                        <% } %>
+                                       <!-- <% if(checkPermissions(user, "app-users.app-users.delete") == true ) { %>
+                                                        <button type="button"
+                                                                class="btn btn-danger btn-sm p-1"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#confirmDeleteModal"
+                                                                data-href="/app-users/<%= info.id %>?_method=delete"
+                                                                data-title="<%= 'Delete app user' %>"
+                                                                data-description=" <%= 'Are you sure you want to delete?' %>">
+                                                            <i class="fa fa-trash"> </i>
+                                                            <%= 'Delete' %>
+                                                        </button>
+                                                    <% } %> -->
+                                        <% if(checkPermissions(user, "app-users.app-users.viewUserActivityLogs") == true ) { %>
+                                            <a class="btn btn-success btn-sm p-1 me-2"
+                                                href="/app-users/user-activity-logs/<%= info.id %>" role="button">
+                                                <i class="icofont icofont-eye-alt"></i>
+                                                    View Activity Logs
+                                            </a> 
+                                        <% } %>
+                                    </td>
+                                </tr>
+                                <% }); } else{ %>
+                                <tr>
+                                    <td colspan="9" style="text-align: center">No Records found.</td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mb-3"><% include ../partials/pagination%></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+</div>

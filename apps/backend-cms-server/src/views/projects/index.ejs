@@ -1,0 +1,78 @@
+<div class="page-body">
+    <%- include('../partials/nav') %>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="mt-2 mb-2"><%- include('../partials/messages') %></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center p-3">
+                        <%- include('../partials/searchForm') %>
+                    </div>
+                    <div class="table-responsive p-2">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SN</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Merchant Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Remarks</th>
+                                    <th scope="col">Website Url</th>
+                            
+                                    <% if(checkPermissions(user, "project-management.projects.edit") == true ||
+                                    checkPermissions(user, "project-management.projects.delete") == true) { %>
+                                    <th scope="col">Action</th>
+                                    <% } %>
+                                </tr>
+                            </thead> 
+                            <tbody>
+                                <% if(docs.length > 0){ sn = (pageNum-1) * pageLimit; docs.forEach(function(project) { %>
+                                                            <tr>
+                                                                <td scope="row"><%= sn += 1 %></td>
+                                                                <td><%= project.project_title ? project.project_title : nil %></td>
+                                                                <td><%= project.merchantData?.full_name ? project.merchantData?.full_name : nil %></td>
+                                                                <td><%= project.email ? project.email : nil %></td>
+                                                                <td><%= project.remarks ? project.remarks : nil %></td>
+                                                                <td><%= project.website_url ? project.website_url : nil %></td>
+                                                                <td>
+                                                                    <% if(checkPermissions(user, "project-management.projects.view-details") == true) { %>
+                                                                        <a
+                                                                            class="text-uppercase btn btn-primary btn-sm p-1"
+                                                                            href="/projects/<%= project._id %>"
+                                                                            role="button"
+                                                                            ><i class="icofont icofont-eye"></i>View Details
+                                                                        </a>
+                                                                    <% } %>
+
+                                                                <% if(checkPermissions(user, "transaction-management.transactions.view") == true) { %>
+                                                                    <a
+                                                                        class="text-uppercase btn btn-success btn-sm p-1"
+                                                                        href="/transactions?user=<%= project.id%>"
+                                                                        role="button"
+                                                                        ><i class="fa fa-history"></i>View Transaction Logs
+                                                                    </a>
+                                                                <% } %>
+
+                                                                
+                                                                    
+                                                                </a>
+                                                                </td>
+                                                            </tr>
+                                                            <% }); } else{ %>
+                                                            <tr>
+                                                                <td colspan="4" style="text-align: center">No Records found.</td>
+                                                            </tr>
+                                                            <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mb-3">
+                        <%- include('../partials/pagination') %>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+</div>

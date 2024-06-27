@@ -1,0 +1,45 @@
+<div class="modal fade" id="meterCount-<%= info.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit User <%= info.full_name %></h5>
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/app-users/edit/<%= info.id %>?_method=PUT" method="POST">
+        <% if (meterCountErrors && meterCountErrors.length > 0) { %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <% meterCountErrors.forEach(function(err, key){ if (err && err.msg) { %>
+      - <%- err.msg %><br/>
+      <% } else if (err && Object.keys(err).length > 0) { for (var key in err) { if (err.hasOwnProperty(key)) { %>
+      - <%- err[key]['msg'] %><br/>
+      <% } } } }); %>
+    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close" data-bs-original-title="" title=""></button>
+</div>
+<%}%>
+      <div class="modal-body">
+        <div>
+          Max Meter
+          <input class="form-control max_meter" data-id="<%= info.id %>" value="<%=info.meter_count%>" data-errors="<%= JSON.stringify(meterCountErrors) %>" name="meter_count" type="text">
+        </div>
+        <div>
+           Max counter
+          <input class="form-control max_counter" name="counter_count" value="<%=info.counter_count%>" type="text">
+        </div>
+   
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary me-2 px-3 change-count" type="submit">Save </button>
+        <button class="btn btn-light px-3" type="button" data-bs-dismiss="modal">Close</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+    $(document).ready(function() {
+        if(($('.max_meter').data("errors").length) > 0 ){
+          const id = $('.max_meter').data("id");
+          $(`#meterCount-${id}`).modal("show");
+        }
+    });
+</script>

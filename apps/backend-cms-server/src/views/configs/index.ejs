@@ -1,0 +1,65 @@
+<div class="page-body">
+    <%- include('../partials/nav') %>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="mt-2 mb-2"><%- include('../partials/messages') %></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center p-3"><%- include('../partials/searchForm') %></div>
+                    <div class="table-responsive p-2">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>Name</th>
+                                    <th>Value</th>
+                                    <!-- <% if(checkPermissions(user, "email-templates.email-templates..edit") == true || checkPermissions(user, "email-templates.email-templates..delete") == true ) { %>
+                                        <th>Action></th>
+                                    <% } %> -->
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(docs.length > 0){ sn = (pageNum-1) * pageLimit; docs.forEach(function(config) { %>
+
+                                <tr >
+                                    <td scope="row"><%= sn += 1 %></td>
+                                    <td >
+                                        <%= config.name %><br />
+                                        <% if(config.help_text){ %> (<%= config.help_text %>) <% } %>
+                                    </td>
+                                    <td >
+                                        <form action="<%-url+'/'+config.id %>?_method=PUT" method="post" id="form" enctype="multipart/form-data">
+                                            <div class="input-group ">
+                                                <% if(config.type == "checkbox"){ %> <input onclick="submit()" name="checkbox" type="checkbox" <%
+                                                if(config.value == 'true'){%> checked <%}%>> <% }else{ %> <input autocomplete="off" type="<%=
+                                                config.type ? config.type : 'text' %>" class="form-control <%= config.name === 'Null Field'||
+                                                config.name === 'Assessment Gdrive Folder' || config.name === 'Assessment Gdrive Path' ? '' :
+                                                'onlynum' %>" onchange="submit()" <% if(checkPermissions(user, "configs.configs.edit") !== true ) {%>
+                                                disabled="" <%}%> name="value" class="form-control" value="<%= config.value ? config.value : nil %>"
+                                                required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text" id="basic-addon2"><%= config.attribute %></span>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                                <% }); }else{ %>
+                                <tr>
+                                    <td colspan="4" style="text-align: center; height: 50px">No Records found.</td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mb-3"><%- include('../partials/pagination') %></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+</div>

@@ -1,0 +1,90 @@
+<div class="page-body">
+    <%- include('../partials/nav') %>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="mt-2 mb-2"><%- include('../partials/messages') %></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center p-3">
+                        <%- include('../partials/searchForm') %>
+                        <% if(checkPermissions(user, "merchant-management.merchants.create") == true) { %>
+                            <a class="btn btn-primary main-pg-btn btn-icon-text pull-right px-2" href="/merchants/create" merchant="button">
+                                <i class="fa fa-plus"> </i> Add New</a
+                            >
+                        <% } %>
+                    </div>
+                    <div class="table-responsive p-2">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SN</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone number</th>
+                                    <th scope="col">Origin</th>
+                                    <% if(checkPermissions(user, "merchant-management.merchants.edit") == true ||
+                                    checkPermissions(user, "merchant-management.merchants.delete") == true) { %>
+                                    <th scope="col">Action</th>
+                                    <% } %>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(docs.length > 0){ sn = (pageNum-1) * pageLimit; docs.forEach(function(merchant) { %>
+                                                            <tr>
+                                                                <td scope="row"><%= sn += 1 %></td>
+                                                                <td><%= merchant.full_name ? merchant.full_name : nil %></td>
+                                                                <td><%= merchant.email ? merchant.email : nil %></td>
+                                                                <td><%= merchant.phone_num ? merchant.phone_num : nil %></td>
+                                                                <td><%= merchant.origin ? merchant.origin : nil %></td>
+                                                                <td>
+                                                                    <% if(checkPermissions(user, "merchant-management.merchants.view-details") == true) { %>
+                                                                        <a
+                                                                            class="text-uppercase btn btn-primary btn-sm p-1"
+                                                                            href="/merchants/<%= merchant._id %>/details"
+                                                                            role="button"
+                                                                            ><i class="icofont icofont-eye"></i>View Details
+                                                                        </a>
+                                                                    <% } %>
+
+
+                                                                <% if(checkPermissions(user, "merchant-management.merchants.password") == true) { %>
+                                                                        <a
+                                                                            class="text-uppercase btn btn-success btn-sm p-1"
+                                                                            href="/merchants/<%= merchant._id %>/change-password"
+                                                                            role="button"
+                                                                            ><i class="fa fa-key mr-1"></i>Change Password
+                                                                        </a>
+                                                                <% } %>
+
+                                                                <% if(checkPermissions(user, "logs.merchant-logs.view") == true) { %>
+                                                                    <a
+                                                                        class="text-uppercase btn btn-secondary btn-sm p-1"
+                                                                        href="/merchant-logs?user=<%= merchant.id%>"
+                                                                        role="button"
+                                                                        ><i class="fa fa-history"></i>View Logs
+                                                                    </a>
+                                                                <% } %>
+
+                                                                
+                                                                    
+                                                                </a>
+                                                                </td>
+                                                            </tr>
+                                                            <% }); } else{ %>
+                                                            <tr>
+                                                                <td colspan="4" style="text-align: center">No Records found.</td>
+                                                            </tr>
+                                                            <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mb-3">
+                        <%- include('../partials/pagination') %>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+</div>

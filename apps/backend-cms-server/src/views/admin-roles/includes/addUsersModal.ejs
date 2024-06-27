@@ -1,0 +1,31 @@
+<div class="modal fade" id="addUserModal-<%= role.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><%= role.name %> - Add Admins</h5>
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/admin-roles/<%= role.id %>/add-users" method="POST">
+      <div class="modal-body">
+        <div>
+          Select Admins
+        </div>
+        <% let userIds = getUserIds(role.roleUsers) %>
+        <select multiple name="users" class="form-control select2" id="">
+          <% userData.forEach(function(user) { %>
+            <option value="<%= user.id %>" 
+            <%if(userIds.includes(user.id)){%>
+                selected
+            <%}%>
+            > <%= user.employee_name ? user.employee_name : user.first_name %></option>
+          <% }); %>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary me-2 px-3 " type="submit">Save </button>
+        <button class="btn btn-light px-3" type="button" data-bs-dismiss="modal">Close</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>

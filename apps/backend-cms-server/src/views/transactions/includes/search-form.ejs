@@ -1,0 +1,83 @@
+<form class="align-items-center w-100" action="<%- url %>" method="get" autocomplete="off">
+    <div class="row align-items-baseline mt-3 g-2">
+        <div class="col-lg-3">
+            <div class="inner__border">
+                <div class="input-group date" id="dt-minimum" data-target-input="nearest">
+                    <input
+                    class="form-control digits" type="text" name="daterange" id="date-range" value="<%= Object.keys(query).length > 0 &&
+                    query.daterange !== '' ? query.daterange : defaultRange %>"
+                    />
+                    <div class="input-group-text" data-target="#dt-minimum" data-toggle="datetimepicker">
+                        <i class="fa fa-calendar"> </i>
+                    </div>
+                </div>          
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="inner__border">
+                <label class="sr-only" for="keyword">keyword</label>
+                <input class="form-control" id="keyword" type="text" value="<%= query ? query.keyword : '' %>" placeholder="Keyword" name="keyword" />         
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="inner__border">
+                <select  class="form-control select2"  name="status" id="status"  >
+                    <option  value="" selected>Status </option>
+                    <% if(status.length > 0 ){%>
+                        <% let selectedStatus =( typeof(query) !== 'undefined' && query.status)? query.status: '' %>
+                        <% status.forEach(item=> {%>
+                        <option  value="<%= item %>" 
+                            <% if(selectedStatus && selectedStatus == item ){ %>selected
+                                <%}%> ><%= item%></option>
+                        <%})%>
+                    <%}%>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="inner__border">
+                <select class="form-control select2" id="gatewayId" name="gatewayId">
+                    <option  value="" selected>List of Payment Gateway </option>
+
+                    <%if (GatewayData !== undefined && GatewayData.length > 0 ){%>
+                        <%let id =( typeof(query) !== 'undefined' && query.gatewayId)? query.gatewayId: ''%>
+                        <%GatewayData.forEach((gateway) =>{ %>
+                        <option  value="<%= gateway.id %>"<% if(id && id == gateway.id){ %>selected
+                            <%}%>><%= gateway.title%></option>
+                        <%})%>
+                    <%}%>
+                </select>  
+               
+               
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="inner__border">
+                <select class="form-control select2" id="projectId" name="projectId">
+                    <option  value="" selected>List of Project </option>
+
+                    <%if (projectData !== undefined && projectData.length > 0 ){%>
+                        <%let id =( typeof(query) !== 'undefined' && query.projectId)? query.projectId: ''%>
+                        <%projectData.forEach((project) =>{ %>
+                        <option  value="<%= project.id %>"<% if(id && id == project.id){ %>selected
+                            <%}%>><%= project.project_title%></option>
+                        <%})%>
+                    <%}%>
+                </select>  
+            
+            
+            </div>
+        </div>
+        <div class="col-lg-2 d-flex ps-0">
+                <div class="">
+                    <button class="btn btn-primary px-2 mx-1" type="submit">Search</button>
+                </div>
+                <div class="">
+                    <a href="<%- url %>" class="btn btn-light px-2">Clear</a>
+                </div>
+        </div>
+    </div>
+</form>
+
+
+

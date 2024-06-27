@@ -1,0 +1,33 @@
+<div class="col-sm-12 col-md-6 col-xl-6 mb-4">
+    <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center pb-0">
+        <h5><i class="fa fa-flag pe-2"></i>Meter Flag Details</h5>
+        <h5 style="text-align: center;"> <strong> Total Flags: <%=flaggedByData.length%></strong></h5>
+    </div>
+    <div class="card-body" >
+        <div class="project-box vertical-scroll scroll-demo mb-0">
+            <% if (flaggedByData.length > 0) { %>
+                <%flaggedByData.forEach((flaggedData) =>{ %>
+                <div class="row details">
+                <div class="col-6 p-1"><strong>Meter Name </strong></div>
+                <div class="col-6 p-1"><%=flaggedData?.meterData?.name ? flaggedData?.meterData?.name : nil%> </div>
+                <div class="col-6 p-1"> <strong>Consumer ID</strong></div>
+                <div class="col-6 p-1"><%=flaggedData?.meterData?.consumer_id ? flaggedData?.meterData?.consumer_id : nil %> </div>
+                <div class="col-6 p-1"> <strong>SC NO</strong></div>
+                <div class="col-6 p-1"><%=flaggedData?.meterData?.sc_num ? flaggedData?.meterData?.sc_num : nil%> </div>
+                <div class="col-6 p-1"> <strong>DCS</strong></div>
+                <div class="col-6 p-1"><%=flaggedData?.meterData?.dcsData?.short_name ? flaggedData?.meterData?.dcsData?.short_name : nil%> </div>
+                <div class="col-6 p-1"> <strong>Status</strong></div>
+                <div class="col-6 p-1"><button class="text-uppercase btn btn-primary btn-xs"><%=flaggedData?.status ? flaggedData.status : nil%> </button></div>
+                <div class="col-6 p-1"> <strong>Flagged By</strong></div>
+                <div class="col-6 p-1"><%=flaggedData?.userData?.full_name ? flaggedData?.userData?.full_name : nil%> </div>
+                </div>
+                <hr>
+                <%})%>
+            <%} else {%>
+                    <h3 class="pt-5" style="text-align: center;"></i>No Record Found</h3>
+            <%}%> 
+          </div>
+    </div>
+    </div>
+</div>

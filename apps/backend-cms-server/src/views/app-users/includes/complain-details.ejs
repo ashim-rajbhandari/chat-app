@@ -1,0 +1,48 @@
+<div class="col-sm-12 col-md-6 col-xl-6 mb-4">
+    <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center pb-0">
+        <h5><i class="icofont icofont-exclamation-circle pe-2"></i>User Complain Details</h5>
+        <h5 style="text-align: center;"> <strong> Total Complain: <%=complainData.length%> </strong></h5>
+
+    </div>
+    <div class="card-body" >
+        <div class="project-box vertical-scroll scroll-demo mb-0">
+            <% if (complainData.length > 0) { %>
+                <%complainData.forEach((complainData) =>{ %>
+                    <div class="row details">
+                    <div class="col-6 p-1"> <strong>Fault Location</strong></div>
+                    <div class="col-6 p-1"><%=complainData?.fault_location ? complainData.fault_location : nil%> </div>
+                    <div class="col-6 p-1"> <strong>Subject</strong></div>
+                    <div class="col-6 p-1"><%=complainData?.subjectData?.text ? complainData?.subjectData?.text : nil%> </div>
+                    <div class="col-6 p-1"> <strong>Message</strong></div>
+                    <div class="col-6 p-1"><%=complainData?.messageData?.text ? complainData?.messageData?.text : nil%> </div>
+                    <div class="col-6 p-1"> <strong>Complain Message</strong></div>
+                    <div class="col-6 p-1"><%=complainData?.message? complainData?.message: nil%> </div>
+                    <div class="col-6 p-1"> <strong>Status</strong></div>
+                    <div class="col-6 p-1"><button class="text-uppercase btn btn-primary btn-xs"><%=complainData?.status ? complainData.status : nil%> </button></div>
+                    <div class="col-6 p-1"><strong>Meter Name </strong></div>
+                    <div class="col-6 p-1"><%=complainData?.meterData?.name ? complainData?.meterData?.name : nil%> </div>
+                    <div class="col-6 p-1"> <strong>Image</strong></div>
+                    <div class="col-6 p-1">
+                        <div class="gallery d-flex" style="height: 100px;">
+                            <%complainData?.image?.forEach((image) => { %>
+                                <figure class="me-2" itemprop="associatedMedia" itemscope="">
+                                    <a href="<%=image?  '/backend/uploads/complain/'+ image : '/backend/asset-cms/images/no-image.png' %>" itemprop="contentUrl" data-size="1600x950">
+                                        <img class="" style="width: 80px;" src="<%=image?  '/backend/uploads/complain/'+ image : '/backend/asset-cms/images/no-image.png' %>" itemprop="thumbnail" alt="No image">
+                                    </a>
+                                </figure>
+                            <%})%>
+                        </div>
+                    </div>
+                    <hr>
+                <%})%>
+            <%} else {%>
+                    <h3 class="pt-5" style="text-align: center;"></i>No Record Found</h3>
+            <%}%> 
+          </div>
+    </div>
+    </div>
+    </div>
+</div>
+
+<% include ../../partials/photo-swipe%>

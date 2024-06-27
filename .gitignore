@@ -1,0 +1,19 @@
+node_modules/
+.env
+# YML files
+/config/default.yml
+/config/development.yml
+/config/production.yml
+/config/test.yml
+
+
+apps/backend-cms-server/.env
+apps/consumer-cms-server/.env
+apps/merchant-cms-server/.env
+
+apps/backend-cms-server/public/js
+apps/backend-cms-server/public/css
+apps/backend-cms-server/public/backend/uploads
+
+mix-manifest.json
+

@@ -1,0 +1,14 @@
+<ol class="breadcrumb justify-content-start mt-3">
+    <% 
+    if(typeof breadcrumbs != "undefined" && breadcrumbs.length > 0){
+    breadcrumbs.forEach(function(breadcrumb){ 
+        const link  = breadcrumb.link ?? '#';
+        const title = breadcrumb?.title;
+        let breadcrumbLink = `${title}`
+        if(link !== '#'){
+            breadcrumbLink = `<a href="${link}" class="p-0">${title}</a>`
+        }
+        %>
+        <li class="breadcrumb-item"><%- breadcrumbLink %></li>
+    <% }) } %>
+</ol>

@@ -1,0 +1,42 @@
+ENV: 'development'
+db:
+  DBCONFIG: postgresql://postgres:ashim@127.0.0.1:5432/rsp
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: ashim
+  POSTGRES_DB: rsp
+  POSTGRES_HOST: 127.0.0.1
+
+ports:
+  API_PORT: 3333
+  CMS_PORT: 5555
+
+cms:
+  SESSION_SECRET: node_ekcms
+  COOKIE_SECRET: node_ekcms
+  CMS_TITLE: EK-CMS
+  CMS_URL: http://localhost:9090/
+  ADMIN_DEFAULT_EMAIL: superadmin@mailinator.com
+  PAGE_LIMIT: 20
+  COOKIE_MAXAGE_IN_SEC: 7200
+  CMS_DEBUG: true
+
+redis:
+  REDIS_PORT: 6379
+  REDIS_HOST: 127.0.0.1
+  REDIS_TTL: 7200
+
+mail:
+  MAIL_HOST: mailgun
+  MAIL_PORT: info@ekbana.com
+  MAIL_FROM_ADDRESS: key-1443c655d9e02a4fa75a08974d0125e5
+  MAIL_USERNAME: mh.ekbana.net
+  MAIL_PASSWORD: info@ekbana.info
+
+API_DEBUG: true
+FRONTEND_URL: 'localhost:3000'
+
+tokens:
+  accessTokenExpiry: 7200
+  refreshTokenExpiry: 7200
+  accessTokenSecret: accesstokensecret
+  refreshTokenSecret: refreshtokensecret

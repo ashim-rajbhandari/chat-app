@@ -1,0 +1,7 @@
+const BaseTransformer = require('shared/src/transformers/base-transformer');
+
+module.exports = class %transformerName% extends BaseTransformer {
+  transform(item) {
+    return {};
+  }
+};

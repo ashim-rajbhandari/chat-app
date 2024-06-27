@@ -1,0 +1,23 @@
+<div class="col-xl-6 col-md-12 box-col-6">
+    <div class="card">
+      <div class="card-header pb-0">
+        <div class="row">
+          <div class="col-md-8"><h5>ACTIVE USERS</h5></div>
+          <div class="col-md-4">
+              <select name="" id="" class="form-control select2 activeUsers">
+                <option value="" disabled>Select Day</option>
+                  <option value="last-day">Last Day</option>
+                  <option value="today">Today</option>
+              </select>
+          </div>
+        </div>
+      </div>
+      <div style="margin-left: 25rem;">
+        <%- include('../partials/loader-spinner', {height: 25, spinnerLoader: "activeUsersLoader"}) %>
+      </div>
+      <div class="card-body chart-block">
+        <canvas id="activeUsersGraph" data-activeusers="<%= 1 %>">
+        </canvas>
+      </div>
+    </div>
+</div>

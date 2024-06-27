@@ -1,0 +1,36 @@
+db:
+  DBCONFIG:
+  POSTGRES_USER:
+  POSTGRES_PASSWORD:
+  POSTGRES_DB:
+  POSTGRES_HOST:
+
+ports:
+  MERCHANT_PORT:
+  CONSUMER_PORT:
+  CMS_PORT:
+
+cms:
+  SESSION_SECRET: payment_aggregator_session_secret
+  COOKIE_SECRET: payment_aggregator_cookie_secret
+  CMS_TITLE: PAYMENT MANAGEMENT
+  CMS_URL:
+  ADMIN_DEFAULT_EMAIL: superadmin@mailinator.com
+  PAGE_LIMIT: 20
+  COOKIE_MAXAGE_IN_SEC: 7200
+  CMS_DEBUG: true
+
+redis:
+  REDIS_PORT:
+  REDIS_HOST:
+  REDIS_TTL:
+
+mail:
+  MAIL_HOST:
+  MAIL_PORT:
+  MAIL_FROM_ADDRESS:
+  MAIL_USERNAME:
+  MAIL_PASSWORD:
+
+API_DEBUG: true
+FRONTEND_MERCHANT_URL:

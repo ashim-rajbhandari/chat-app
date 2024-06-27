@@ -1,0 +1,13 @@
+<% if (error_arr && Object.keys(error_arr).length > 0) { %>
+<div class="alert alert-danger" style="width: 100%;">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+    <ul>
+        <% _.mapKeys(error_arr[0], function(value, key) { %>
+        <li style="margin-bottom: 0px;"><%- value.msg %></li>
+        <% }) %>
+    </ul>
+</div>
+
+
+
+<% } %>

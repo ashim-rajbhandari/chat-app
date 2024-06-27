@@ -1,0 +1,17 @@
+<div class="page-body">
+    <% include ../partials/nav.ejs %>
+    
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="mt-2 mb-2"><% include ../partials/messages %></div>
+        <div class="row"> 
+            <% include ./includes/user-details %>   
+            <% include ./includes/meter-details %>   
+        </div>
+
+        <div class="row">
+            <% include ./includes/flag-details %>   
+            <% include ./includes/complain-details %>          
+        </div>
+    </div>
+</div>

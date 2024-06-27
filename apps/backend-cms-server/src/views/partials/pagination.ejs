@@ -1,0 +1,79 @@
+<div class="custom-pagination clearfix" style="margin-top: 20px; margin-left: 10px;">
+    <%
+    let totalPageTab = 5;
+    if(typeof passedPageTab !== 'undefined'){
+        totalPageTab = passedPageTab;
+    }
+    %>
+    <% if(total>0){ %>
+    <div class="pagination-info float-left" style="float: left;">
+        
+        Showing <%= from %> to <%= to %>
+        of <%= total %> entries
+    </div>
+    <%}%>
+    <% if(total > pageLimit) {
+        let rootUrl = url.split('?')[0];
+        let newUrl = rootUrl;
+        if (query) {
+            let cntr = 1;
+            for (let key in query) {
+                if(key === "dateFilter"){
+                    continue;
+                }
+                if (key != 'page') {
+                    newUrl = cntr == 1 ? newUrl + ("?" + key + "=" + query[key]) : newUrl + ("&" + key + "=" + query[key]);
+                    cntr++;
+                }
+            }
+            if(query.dateFilter){
+                newUrl += buildPropertyDateFilter(query.dateFilter);
+            }
+            newUrl += cntr > 1 ? "&page=" : "?page=";
+        } else {
+            newUrl += "?page=";
+        } %>
+    <div class="pagination-nav float-right" style="float: right;">
+        <nav class="" aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a href="<%= typeof paginationClassName == "undefined" ? (queryValue == null || parseInt(pageNum) == 1) ? newUrl + '1' : newUrl + '1':'#' %>" data-page="1" data-name="pagination" data-id="<%- typeof dataId != "undefined" ? dataId:'' %>" class="page-link <%- typeof paginationClassName != "undefined" ? paginationClassName : '' %>" aria-label="Previous">
+                        <span class="fa fa-angle-double-left"></span>
+                    </a>
+                </li>
+                <li class="page-item"><a href="<%= typeof paginationClassName == "undefined" ? (parseInt(pageNum) > 1) ?  newUrl + (parseInt(pageNum) - 1) : 'javascript:void(0);':'#' %>" data-page="<%= (parseInt(pageNum) > 1) ?  (parseInt(pageNum) - 1) : parseInt(pageNum) %>" data-id="<%- typeof dataId != "undefined" ? dataId:'' %>" data-name="pagination" class="page-link <%- typeof paginationClassName != "undefined" ? paginationClassName : '' %>" aria-label="Previous">
+                        <span class="fa fa-angle-left"></span></a>
+                </li>
+                <% let cntr = (parseInt(pageNum) - 2) < 1 ? 1 : parseInt(pageNum) - 2;
+                    for(let i = cntr; i <= pageCount; i++) { if (i > cntr + totalPageTab) break;
+                    let isCurrent = i == parseInt(pageNum);
+                    let navigationUrl = isCurrent ? "javascript:void(0);" : newUrl + i
+                %>
+                <li class="page-item <%= isCurrent ? 'active' : ''; %>" <%= isCurrent ? 'disabled' : ''; %> ><a
+                            href="<%= typeof paginationClassName == "undefined" ? navigationUrl:'#' %>"
+                            data-page="<%= i %>"
+                            data-id="<%- typeof dataId != "undefined" ? dataId:'' %>"
+                            data-name="pagination"
+                            class="page-link <%- typeof paginationClassName != "undefined" ? paginationClassName : '' %>">
+                        <%= i %>
+                    </a></li>
+                <% } %>
+                <li class="page-item"><a
+                            href="<%= typeof paginationClassName == "undefined" ? (parseInt(pageNum) < pageCount) ? newUrl + (parseInt(pageNum) + 1) : 'javascript:void(0);':'#' %>"
+                            data-page="<%= (parseInt(pageNum) < pageCount) ?  (parseInt(pageNum) + 1): parseInt(pageNum) %>"
+                            data-id="<%- typeof dataId != "undefined" ? dataId:'' %>"
+                            data-name="pagination"
+                            class="page-link <%- typeof paginationClassName != "undefined" ? paginationClassName : '' %>"
+                            aria-label="Next"><span class="fa fa-angle-right"></span><span
+                                class="sr-only">Next</span></a></li>
+                <li class="page-item"><a
+                            href="<%= typeof paginationClassName == "undefined" ? (parseInt(pageNum) < pageCount) ? newUrl + pageCount : 'javascript:void(0);':'#' %>"
+                            data-page="<%= (parseInt(pageNum) < pageCount) ?  pageCount: pageCount %>"
+                            data-id="<%- typeof dataId != "undefined" ? dataId:'' %>"
+                            data-name="pagination"
+                            class="page-link <%- typeof paginationClassName != "undefined" ? paginationClassName : '' %>"
+                            aria-label="Next"><span class="fa fa-angle-double-right"></span></a></li>
+            </ul>
+        </nav>
+    </div>
+    <% } %>
+</div>

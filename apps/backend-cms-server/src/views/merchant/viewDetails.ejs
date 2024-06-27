@@ -1,0 +1,149 @@
+<div class="page-body">
+    <%- include('../partials/nav') %>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="mt-2 mb-2"><%- include('../partials/messages') %></div>
+        <div class="row">
+
+            <div class="col-sm-12 col-md-6 col-xl-6 mb-4">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center pb-0">
+                        <h5><i class="fa fa-industry"></i> Merchant Detail</h5>   
+                    </div>
+                    <div class="card-body">
+                        <% if (merchantData) { %>
+                            <div class="row details">
+                                    <div class="col-6 p-1"><strong>Full Name </strong></div>
+                                    <div class="col-6 p-1"><%=merchantData?.full_name ? merchantData.full_name : nil%> </div>
+                                    <div class="col-6 p-1"><strong>Email </strong></div>
+                                    <div class="col-6 p-1"><%=merchantData?.email ? merchantData.email : nil%> </div>
+                                    <div class="col-6 p-1"><strong>Phone Number </strong></div>
+                                    <div class="col-6 p-1"><%=merchantData?.phone_num ? merchantData.phone_num : nil%> </div>
+                                    <div class="col-6 p-1"><strong>Addres </strong></div>
+                                    <div class="col-6 p-1"><%=merchantData?.address ? merchantData.address : nil%> </div>
+                                    <div class="col-6 p-1"><strong>Origin </strong></div>
+                                    <div class="col-6 p-1"><%=merchantData?.origin ? merchantData.origin : nil%> </div>
+                                    <div class="col-6 p-1"><strong>Merchant Added Date</strong></div>
+                                    <div class="col-6 p-1"><%=merchantData?.created_at ? formatDate(merchantData.created_at, "YYYY-MM-DD HH:mm") : nil%> </div>
+                            </div>
+                            <%}%>  
+                    </div> 
+                          
+                    <div class="card-header d-flex justify-content-between align-items-center pb-0">
+                        <h5><i class="fa fa-credit-card"></i> payment Gateway</h5>
+                        <h5 style="text-align: center;"> <strong> Total Assoicate Payment Gateway: <%=merchantPaymentData.length%> </strong></h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="project-box vertical-scroll scroll-demo payment-detail-scroll mb-0">
+                            <% if (merchantPaymentData.length > 0) { %>
+                                <%merchantPaymentData.forEach((payment) =>{ %>
+                                <div class="row details">
+                                    <div class="col-6 p-1"><h4><strong>Payment Gateway Reference From</strong></h4></div>
+                                    <div class="col-6 p-1"><h4><%=payment?.paymentGatewayData ? payment?.paymentGatewayData?.title : nil%> </h4></div>
+                                    <div class="col-6 p-1"><strong>Title</strong></div>
+                                    <div class="col-6 p-1"><strong><%=payment?.title ? payment.title : nil%> </strong> </div>
+                                    <div class="col-6 p-1"><strong>Created At</strong></div>
+                                    <div class="col-6 p-1"><%=merchantData?.created_at ? formatDate(merchantData.created_at, "YYYY-MM-DD HH:mm") : nil%> </div>
+                                    <div class="col-6 p-1"><strong>Status</strong></div>
+                                    <% 
+                                        let buttonPayloadcode =  'red-text'
+                                        if(payment?.status == 'active'){
+                                            buttonPayloadcode = 'green-text';                                      
+                                        }
+                                    %>
+                                    <div class="col-6 p-1"><strong class="<%=buttonPayloadcode%>"><%=payment?.status ? payment?.status  : nil%> </strong></div>
+                                </div>
+                                <hr>
+                                <%})%>
+                            <%} else {%>
+                                <h3 class="pt-5" style="text-align: center;"></i>No Record Found</h3>
+                            <%}%> 
+                            
+                          </div>
+                    </div>   
+                    
+                </div>
+            </div>
+
+
+            <div class="col-sm-12 col-md-6 col-xl-6 mb-4">
+                <div class="card">
+
+                    <div class="card-header d-flex justify-content-between align-items-center pb-0">
+                        <h5><i class="icon-svg icon-sidebar icon-projects"></i>Project Detail</h5>
+                        <h5 style="text-align: center;"> <strong> Total Assoicate Project: <%=projectData.length%> </strong></h5>
+                    </div>
+                    <div class="card-body" >
+                        <div class="project-box vertical-scroll scroll-demo mb-0 ">
+                            <% if (projectData.length > 0) { %>
+                                <%projectData.forEach((project) =>{ %>
+                                <div class="row details">
+                                    <div class="col-6 p-1"><strong>Project Title </strong></div>
+                                    <div class="col-6 p-1"><strong> <%=project?.project_title ? project?.project_title : nil%> </strong></div>
+                                    <!-- <div class="col-6 p-1"> <strong>Email</strong></div>
+                                    <div class="col-6 p-1"><%=project?.email ? project?.email  : nil %> </div>
+                                    <div class="col-6 p-1"> <strong>Website Url</strong></div>
+                                    <div class="col-6 p-1"><%=project?.website_url ? project?.website_url : nil%> </div>
+                                    <div class="col-6 p-1"> <strong>IPN Url</strong></div>
+                                    <div class="col-6 p-1"><%=project?.ipn_url ? project?.ipn_url : nil%> </div>
+                                    <div class="col-6 p-1"> <strong>Cancel Url</strong></div>
+                                    <div class="col-6 p-1"><%=project?.cancel_url ? project?.cancel_url : nil%> </button></div>
+                                    <div class="col-6 p-1"> <strong>Return Url</strong></div>
+                                    <div class="col-6 p-1"><%=project?.return_url ? project?.return_url : nil%> </div> -->
+                                    <div class="col-6 p-1"><strong>Project Added Date</strong></div>
+                                    <div class="col-6 p-1"><%=merchantData?.created_at ? formatDate(merchantData.created_at, "YYYY-MM-DD HH:mm") : nil%> </div>
+                                    <div class="col-6 p-1"> <strong>Project Payment Gateway</strong></div>
+                                    <div class="col-6 ">
+
+                                        <% if(project.vProjectPaymentGatewayData !== undefined) {%>
+                                            <% if (project.vProjectPaymentGatewayData.length > 0) { let viewData = project.vProjectPaymentGatewayData; %>
+                                                <div class="row">
+                                                <% viewData.forEach((data) =>{  %>
+
+                                                    <% if(data.gateway_title !== null) {%>
+                                                            <div class="col-4 ">
+                                                                <img class="" style="width: 80px;" src="<%=data.image?  '/backend/asset-cms/images/'+ data.image : '/backend/asset-cms/images/no-image.png' %>" itemprop="thumbnail" alt="No image">                                                        
+                                                                <%= data.gateway_title %> 
+                                                            </div>
+                                                            <%}else{%>
+                                                                <div class="col-6"><strong> Not Selected</strong></div>
+                                                                <%}%>
+                                                            <%})%>
+                                                </div>
+                                            <% } %>
+                                        
+                                        <%}%>
+                                    </div>
+
+                                    
+                                    <div class="col-6 p-1">
+                                        <a 
+                                            href="/projects/<%= project._id %>"
+                                            role="button"
+                                            > <strong> View Details </strong>
+                                        </a>                                  
+                                    </div>
+                                    <div class="col-6 p-1">
+                                        <a 
+                                                href="/projects/<%= project._id %>"
+                                                role="button"
+                                                > <strong> View Transactoin Log </strong>
+                                        </a>
+                                    </div>
+                                </div>
+                                <hr>
+                                <%})%>
+                            <%} else {%>
+                                    <h3 class="pt-5" style="text-align: center;"></i>No Record Found</h3>
+                            <%}%> 
+                        </div>
+                    </div>
+
+
+                
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

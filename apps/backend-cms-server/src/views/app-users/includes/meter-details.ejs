@@ -1,0 +1,33 @@
+<div class="col-sm-12 col-md-6 col-xl-6 mb-4">
+    <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center pb-0">
+        <h5><i class="icofont icofont-speed-meter pe-2"></i>Meter Details</h5>
+        <h5 style="text-align: center;"> <strong> Meter Count: <%=userMeterData.length%> </strong></h5>
+    </div>
+    <div class="card-body" >
+        
+        <div class="project-box vertical-scroll scroll-demo mb-0">
+            <% if (userMeterData.length > 0) { %>
+                <%userMeterData.forEach((userMeter) =>{ %>
+                <div class="row details">
+                    <div class="col-6 p-1"><strong>Name</strong></div>
+                    <div class="col-6 p-1"><%=userMeter?.consumerName ?? nil%> </div>
+                    <div class="col-6 p-1"><strong>SC NO</strong></div>
+                    <div class="col-6 p-1"><%=userMeter?.scNum ?? nil%> </div>
+                    <div class="col-6 p-1"><strong>Consumer ID</strong></div>
+                    <div class="col-6 p-1"><%=userMeter?.consumerId ?? nil%> </div>
+                    <div class="col-6 p-1"><strong>DCS</strong></div>
+                    <div class="col-6 p-1"><%=userMeter?.dcsName ?? nil%> </div>
+                    <div class="col-6 p-1"></div>
+                    <div class="col-6 p-1"><a href="/meters/meter-details/<%= userMeter?.meterUUID %>"><button class="btn btn-success">View Details</button></a> </div>
+                </div>
+                <hr>
+                <%})%>
+            <%} else {%>
+                <h3 class="pt-5" style="text-align: center;"></i>No Record Found</h3>
+            <%}%> 
+            
+          </div>
+    </div>
+    </div>
+</div>

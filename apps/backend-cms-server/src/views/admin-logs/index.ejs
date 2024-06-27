@@ -1,0 +1,43 @@
+<div class="page-body">
+    <%- include('../partials/nav') %>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="mt-2 mb-2"><%- include('../partials/messages') %></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center p-3"><%- include ('./includes/search-form') %></div>
+                    <div class="table-responsive p-2">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>Message</th>
+                                    <th>Performed At</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(docs.length > 0){ sn = (pageNum-1) * pageLimit; docs.forEach(function(item) { %>
+                                <tr>
+                                    <td><%= sn += 1 %></td>
+                                    <td><%=item.message && item.user_id  ? item?.adminData?.username +' '+ item.message : '' %></td>
+                                    <td><%= item.created_at ? formatDate(item.created_at,"YYYY/MM/DD HH:mm:ss") : ''  %></td>
+                                    
+                                </tr>
+                                <% }); } else{ %>
+                                <tr>
+                                    <td colspan="3" style="text-align: center">No Records found</td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mb-3">
+                        <%- include('../partials/pagination') %>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+</div>

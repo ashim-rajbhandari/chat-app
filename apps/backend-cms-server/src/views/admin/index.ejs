@@ -1,0 +1,101 @@
+<div class="page-body">
+    <%- include('../partials/nav') %>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="mt-2 mb-2"><%- include('../partials/messages') %></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center p-3">
+                        <%- include('../partials/searchForm') %> <% if(checkPermissions(user, "user-managements.create") == true) { %>
+                        <a class="btn btn-primary main-pg-btn btn-icon-text pull-right px-2" href="/admins/create" role="button">
+                            <i class="fa fa-plus"> </i> Add New</a
+                        >
+                        <% } %>
+                    </div>
+                    
+                    <div class="table-responsive p-2">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>Full name</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Admin Role</th>
+                                    <th>Status</th>
+                                    <% if(checkPermissions(user, "user-management.admins.edit") == true || checkPermissions(user,
+                                    "user-management.admins.delete") == true || checkPermissions(user, "user-management.admins.password") == true) {
+                                    %>
+                                    <th>Action</th>
+                                    <% } %>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(docs.length > 0){ sn = (pageNum - 1) * pageLimit; docs.forEach(function(admin) { %>
+                                <tr>
+                                    <td scope="row"><%= sn += 1 %></td>
+                                    <td><%= admin.first_name ? admin?.display_name : admin?.first_name %></td>
+                                    <td><%= admin.username ? admin.username : nil %></td>
+
+                                    <td><%= admin.email ? admin.email : nil %></td>
+                                    <td>
+                                        <%if(admin.role_id && admin.role_id === 1) {%>
+                                        <span class="text-uppercase badge badge-primary">superadmin</span>
+                                        <% } %> <% admin.userRoles.forEach(function(userRoles){%>
+                                        <span class="text-uppercase badge badge-primary"><%= userRoles.roleAdmin.name %></span>
+                                        <%})%>
+                                    </td>
+                                    <td>
+                                        <% let badgeType = 'badge-success'; if (admin.status == "inactive") { badgeType = 'badge-danger'; } else if
+                                        (admin.status == "blocked") { badgeType = 'badge-danger'; } %>
+                                        <span class="text-uppercase badge <%= badgeType %>"><%= admin.status %></span>
+                                    </td>
+                                    <% if(checkPermissions(user, "user-management.admins.edit") == true || checkPermissions(user,
+                                    "user-management.admins.delete") == true || checkPermissions(user, "user-management.admins.password") == true) {
+                                    %>
+                                    <td>
+                                        <% if(checkPermissions(user, "user-management.admins.edit") == true) { %>
+                                        <a class="text-uppercase btn btn-light btn-sm p-1" href="/admins/<%= admin._id %>" role="button"
+                                            ><i class="fa fa-edit"> </i> Edit</a
+                                        >
+                                        <% } %> <% if(checkPermissions(user, "user-management.admins.delete") == true) { %> <% if(admin._id !=
+                                        MAINSUPERADMIN){ %>
+
+                                        <button
+                                            class="btn btn-danger btn-sm p-1"
+                                            type="button"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#confirmDeleteModal"
+                                            data-href="/admins/<%= admin._id %>?_method=delete"
+                                            data-title="Delete Admin"
+                                            data-description="Are you sure you want to delete?"
+                                        >
+                                            <i class="fa fa-trash"></i> Delete
+                                        </button>
+                                        <% } %> <% } %> <% if(checkPermissions(user, "user-management.admins.password") == true) { %>
+                                        <a
+                                            class="text-uppercase btn btn-success btn-sm p-1"
+                                            href="/admins/<%= admin._id %>/change-password"
+                                            role="button"
+                                            ><i class="fa fa-key mr-1"></i>Change Password
+                                        </a>
+                                        <% } %>
+                                    </td>
+                                    <% } %>
+                                </tr>
+                                <% }); } else { %>
+                                <tr>
+                                    <td colspan="6" style="text-align: center">No Records found.</td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mb-3"><%- include('../partials/pagination') %></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+</div>

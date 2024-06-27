@@ -1,0 +1,85 @@
+<form class="align-items-center" action="<%- url %>" method="get" autocomplete="off">
+    <div class="row align-items-baseline mt-1">
+        <div class="col-lg-4">
+            <div class="inner__border">
+                <div class="input-group">
+                    <div class="input-group date" id="dt-minimum" data-target-input="nearest">
+                        <input class="form-control digits" type="text" name="daterange" id="date-range"
+                        value="<%= typeof query.daterange !== 'undefined' ? query.daterange : defaultRange %>"/>
+                        
+                        <div class="input-group-text" data-target="#dt-minimum" data-toggle="datetimepicker">
+                            <i class="fa fa-calendar"> </i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-lg-4 ps-0">
+            <div class="inner__border">
+                <div class="input-group">
+                    <label class="sr-only" for="keyword">keyword</label>
+                    <input class="form-control" id="keyword" type="text" value="<%= query ? query.keyword : '' %>" placeholder="Keyword" name="keyword">            
+                </div>
+            </div>
+        </div>
+        
+    
+        <div class="col-lg-4 ps-0">
+            <div class="inner__border">
+                <select class="form-control select2"  name="verified" id="verified" >
+                    <option value="" >Verification Status</option>
+                    <%let verified =( typeof(query) !== 'undefined' && query.verified)? query.verified: ''%>
+                    
+                    <option value="true" <% if(verified && verified == 'true' ){ %>selected 
+                        <%}%>
+                        > Verified  </option>
+                    <option value="false" <% if(verified && verified == 'false' ) {%>selected 
+                        <%}%>
+                        > Un-Verified  </option>
+                </select>
+            </div>       
+        </div>
+    </div>
+    <div class="row align-items-baseline mt-2">
+        <div class="col-lg-4">
+            <div class="inner__border">
+                <select class="form-control select2"  name="verification_status" id="verification_status" >
+                    <option value="" >Account Status</option>
+                    <%let verification_status =( typeof(query) !== 'undefined' && query.verification_status)? query.verification_status: ''%>
+                    <% Object.keys(accountStatus).forEach(function(statusKey) { %>
+                        <option value="<%= statusKey %>" <% if(verification_status && verification_status == statusKey){ %>selected
+                        <% } %>>
+                            <%=accountStatus[statusKey] %> 
+                        </option>
+                    <% }); %> 
+                </select>
+            </div>
+        </div>
+
+        <div class="col-lg-4 ps-0">
+            <div class="inner__border">
+                <select class="form-control select2"  name="status" id="status" >
+                    <option value="" >Status</option>
+                    <%let status =( typeof(query) !== 'undefined' && query.status)? query.status: ''%>
+                    
+                    <option value="true" <% if(status && status == 'true' ){ %>selected 
+                        <%}%>
+                        > Activate  </option>
+                    <option value="false" <% if(status && status == 'false' ) {%>selected 
+                        <%}%>
+                        > Deactivate  </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-lg-4 d-flex ps-0">
+                <div class="">
+                    <button class="btn btn-primary px-2 mx-1" type="submit">Search</button>
+                </div>
+                <div class="">
+                    <a href="<%- url %>" class="btn btn-light px-2">Clear</a>
+                </div>
+        </div>
+    </div>
+</form>

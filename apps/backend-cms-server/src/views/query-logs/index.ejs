@@ -1,0 +1,50 @@
+<div class="page-body">
+    <% include ../partials/nav.ejs %>
+    
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="mt-2 mb-2"><% include ../partials/messages %></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header p-3">
+                        <% include ./includes/search-form %> 
+                    </div>
+                    <div class="table-responsive p-2">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>Query</th>
+                                    <th>Number of Calls</th>
+                                    <th>Total Execution Time (In ms)</th>
+                                    <th>Minium Execution Time (In ms)</th>
+                                    <th>Maximum Execution Time (In ms)</th>
+                                    <th>Mean Execution Time (In ms)</th>
+                                    <th>Standard Deviation Execution Time (In ms)</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(docs.length > 0){ let sn = 0; docs.forEach(function(item) { %>
+                                    <tr>
+                                        <td scope="row"><%= sn += 1 %></td>
+                                        <td><p class="query-logs"><%= item?.query ? item.query : nil %></p></td>
+                                        <td><%= item?.calls ? item.calls : nil %></td>
+                                        <td><%= item?.total_time ? parseFloat(item.total_time).toFixed(3)  : nil%></td>
+                                        <td><%= item?.min_time ? parseFloat(item.min_time).toFixed(3)  : nil%></td>
+                                        <td><%= item?.max_time ? parseFloat(item.max_time).toFixed(3)  : nil%></td>
+                                        <td><%= item?.mean_time ? parseFloat(item.mean_time).toFixed(3)  : nil%></td>
+                                        <td><%= item?.stddev_time ? parseFloat(item.stddev_time).toFixed(3)  : nil%></td>
+                                    </tr>
+                                <%})}%>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mb-3"><% include ../partials/pagination%></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+</div>

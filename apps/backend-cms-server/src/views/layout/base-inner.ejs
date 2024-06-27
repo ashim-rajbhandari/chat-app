@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/page-header') %>
+<body class="rtl">
+<div class="tap-top"><i data-feather="chevrons-up"></i></div>
+<div class="page-wrapper compact-wrapper" id="pageWrapper">
+    <%- include('../partials/global-loader') %>
+    <%- include('../partials/header') %>
+    <div class="page-body-wrapper horizontal-menu">
+        <%- include('../partials/sidebar') %>
+        <%- include(innerPage) %>
+        <%- include('../partials/footer') %>
+    </div>
+    <%- include('../partials/delete-confirm') %>
+    <%- include('../partials/sidebar-menu') %>
+</div>
+<%- include('../partials/scripts') %>
+</body>
+</html>

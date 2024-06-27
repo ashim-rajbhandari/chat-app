@@ -1,0 +1,107 @@
+<!-- Main Content-->
+<div class="main-content side-content pt-5">
+    <div class="container-fluid">
+
+        <div class="inner-body">
+            <form action="<%-url%>" method="post">
+                <!-- Page Header -->
+                <div class="page-header sticky-header">
+                    <div>
+                        <h2 class="main-content-title tx-24 mg-b-5">
+                            <%= pageTitle %>
+                        </h2>
+                        <% include ../partials/breadcrumb %>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <% if(checkPermissions(user, "ip-access.ip-access.create" )==true ) { %>
+                            <button class="btn main-save-btn btn-icon-text my-2 mr-2"
+                                type="submit">
+                                Save
+                            </button>
+                            <% } %>
+                    </div>
+                </div>
+                <!-- End Page Header -->
+                <!-- Row -->
+                <div class="row row-sm">
+                    <div class="col-lg-12">
+                        <% include ../partials/messages %>
+                            <div class="card custom-card">
+                                <div class="card-body">
+                                    <table id="ipAccessTable" class="table table-striped">
+                                        <tbody>
+                                            <% if(docs.length> 0){
+                                                docs.forEach(function(ip, key) {
+                                                if(key === 0){
+                                                %>
+
+                                                <tr class="clone_div">
+                                                    <td>
+                                                        <b>
+                                                            IP Address
+                                                        </b>
+                                                        <span style="color:red;">*</span>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control ip-id-val"
+                                                            name="ip_values[]" value="<%= ip.ip_address %>" required>
+                                                    </td>
+                                                    <td class="plus-action text-center">
+                                                        <% if(checkPermissions(user, "ip-access.ip-access.create"
+                                                            )==true){%>
+                                                            <span class="fa fa-plus tr_clone_add icons"></span>
+                                                    </td>
+                                                    <% } %>
+                                                </tr>
+                                                <% }else{%>
+                                                    <tr class="clone_div">
+                                                        <td>
+                                                            <b>
+                                                                IP Address
+                                                            </b>
+                                                            <span style="color:red;">*</span>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control ip-id-val"
+                                                                name="ip_values[]" value="<%= ip.ip_address %>"
+                                                                required>
+                                                        </td>
+                                                        <td class="text-center position-relative">
+                                                            <% if(checkPermissions(user, "ip-access.ip-access.delete"
+                                                                )==true){%>
+                                                                <span class='fa fa-minus rmv icons'></span>
+                                                                <% } %>
+                                                        </td>
+                                                    </tr>
+                                                    <% }})}else{ %>
+                                                        <tr class="clone_div">
+                                                            <td>
+                                                                <b>
+                                                                    IP Address
+                                                                </b>
+                                                                <span style="color:red;">*</span>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control ip-id-val"
+                                                                    name="ip_values[]" required>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <span
+                                                                    class="fa fa-plus tr_clone_add icons"></span>
+                                                            </td>
+                                                        </tr>
+                                                    <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <!-- End Row -->
+    </div>
+</div>
+<script src="/js/ip-access.js" defer></script>
+<!-- End Main Content-->

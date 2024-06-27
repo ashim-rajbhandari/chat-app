@@ -1,0 +1,69 @@
+<div class="page-body">
+    <%- include('../partials/nav') %>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="mt-2 mb-2"><%- include('../partials/messages') %></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center p-3">
+                        <%- include('../partials/searchForm') %>
+                        <% if(checkPermissions(user, "payment-gateway.payment.create") == true) { %>
+                            <!-- <a class="btn btn-primary main-pg-btn btn-icon-text pull-right px-2" href="/payment-gateways/create" gateway="button">
+                                <i class="fa fa-plus"> </i> Add New</a
+                            > -->
+                        <% } %>
+                    </div>
+                    <div class="table-responsive p-2">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SN</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Remarks</th>
+                                    <th scope="col">Status</th>
+                                    
+                                    <th scope="col">Status Change Remark</th>
+
+                                </tr>
+                            </thead>
+                        <tbody>
+                                <% if(docs.length > 0){ sn = (pageNum-1) * pageLimit; docs.forEach(function(gateway) { %>
+                                                            <tr>
+                                                                <td scope="row"><%= sn += 1 %></td>
+                                                                <td><%= gateway.title ? gateway.title : nil %></td>
+                                                                <td><%= gateway.remarks ? gateway.remarks : nil %></td>
+                                                                <td>
+                                                                    <%let btnColor= "btn-danger";
+                                                                    if(gateway.status === 'active'){
+                                                                        btnColor = "btn-success";
+                                                                    }
+                                                                    
+                                                                    %>
+                                                                    <button class="btn <%=btnColor%> btn-sm p-1" type="button" data-bs-toggle="modal" 
+                                                                    data-bs-target="#changeStatus-<%= gateway._id %>"> <%= gateway.status ? gateway.status : nil %></button>
+                                                                    <% if(checkPermissions(user, "payment-gateway.payment.edit") == true) { %>
+
+                                                                    <%- include('./includes/addUsersModal', {gateway}) %> 
+                                                                    <% } %>
+                                                                </td>
+                                                                <td><%= gateway?.paymentGatewayStatusLogData?.[0]?.remarks ?  gateway?.paymentGatewayStatusLogData?.[0]?.remarks :nil%></td>
+                                                                
+                                                            </tr>
+                                                            <% }); } else{ %>
+                                                            <tr>
+                                                                <td colspan="4" style="text-align: center">No Records found.</td>
+                                                            </tr>
+                                                            <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mb-3">
+                        <%- include('../partials/pagination') %>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+</div>

@@ -1,0 +1,37 @@
+<div class="page-body">
+    <% include ../partials/nav.ejs %>
+    <div class="container-fluid general-widget">
+      <div class="mt-2 mb-2"><% include ../partials/messages %></div>
+      <div class="row">
+        <% include ./notification-logs-partials/totalSms.ejs %>
+        <% include ./notification-logs-partials/totalNotification.ejs %>
+        <% include ./notification-logs-partials/totalEmail.ejs %>
+        <% include ./notification-logs-partials/dailySms.ejs %>
+        <% include ./notification-logs-partials/dailyNotification.ejs %>
+        <% include ./notification-logs-partials/dailyEmail.ejs %>
+      </div>
+      <div class="row">
+        <div class="col-10 mt-2 text-end">
+          <label class ="fs-6 text-uppercase fw-bold text-secondary">FILTER GRAPH</label>
+        </div>
+        <div class="col-sm-2 mb-2">
+          <select class="form-control select2" id="logs-data">
+            <option value="7" >Last 7 days</option>
+            <option value="30" >Last 30 days</option>
+            <option value="thisMonth" >This Month</option>
+            <option value="lastMonth" >Last Month</option>
+            <option value="thisYear" >This Year</option>
+            <option value="lastYear" >Last Year</option>
+          </select> 
+        </div>
+      </div>
+      <div class="row">
+        <% const height = 16.2; %>
+        <%- include('./notification-logs-partials/SMSGraph.ejs', {height}) %>
+        <%- include('./notification-logs-partials/notificationGraph.ejs', {height}) %>
+        <%- include('./notification-logs-partials/emailGraph.ejs', {height}) %>
+      </div>
+    </div>
+</div>
+
+<script src="js/notification-logs-analytics.js"></script>

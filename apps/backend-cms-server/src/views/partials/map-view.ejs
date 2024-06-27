@@ -1,0 +1,77 @@
+<div class="mb-3">
+    <div class="row align-items-baseline mt-3">
+        <div class="col-lg-6">
+            <div class="inner__border">
+                <label class="col-form-label">Latitude</label>
+                <input class="form-control latitude" id="lat" type="text" name="<%= typeof(name) != "undefined" ? name?.latitude : "latitude"%>" value="<%= inputData && inputData.latitude ? inputData.latitude: typeof (data) != "undefined" && data.latitude ? data.latitude : '27.7172'  %>"  />            
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="inner__border">
+                <label class="col-form-label">Longitude</label>
+                <input class="form-control longitude" id="long" type="text" name="<%= typeof(name) != "undefined" ? name?.longitude : "longitude"%>" value="<%= inputData && inputData.longitude ? inputData.longitude: typeof (data) != "undefined"  && data.longitude ? data.longitude : '85.3240'  %>" />            
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="map-canvas" class="mb-3"></div>
+    
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%=googleMapsApiKey%>&libraries=places&callback=initialize"></script>
+
+<script>
+    let marker;
+    function initialize() {
+        let mapOptions, map,
+            latEl = document.querySelector( '.latitude' ),
+            longEl = document.querySelector( '.longitude' ),
+            element = document.getElementById( 'map-canvas' );
+            lat = document.getElementById('lat').value;
+            long = document.getElementById('long').value;
+        
+        mapOptions = {
+            zoom: 13,
+            // Current Lat and Long position of the pin/
+            center: new google.maps.LatLng( lat, long),
+            disableDefaultUI: false, // Disables the controls like zoom control on the map if set to true
+            scrollWheel: true, // If set to false disables the scrolling on the map.
+            draggable: true, // If set to false , you cannot move the map around.
+
+        };
+
+        // Create an object map with the constructor function Map()
+        map = new google.maps.Map( element, mapOptions ); 
+        // Till this like of code it loads up the map.
+        marker = new google.maps.Marker({
+            position: mapOptions.center,
+            map: map
+        });
+        
+        /**
+         * Finds the new position of the marker when the marker is dragged.
+         */
+        google.maps.event.addListener( map, "click", function ( event ) {
+            let lat, long;
+
+            marker.setMap(null);
+
+            marker = new google.maps.Marker({
+                position: event.latLng,
+                map: map,
+            });
+
+            lat = event.latLng.lat();
+            long = event.latLng.lng();
+
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode( { latLng: marker.getPosition() }, function ( result, status ) {
+                if ( status === 'OK' ) {  // This line can also be written like if ( status == google.maps.GeocoderStatus.OK ) {
+                    latEl.value = lat;
+                    longEl.value = long;
+                } else {
+                    console.log( 'Geocode was not successful for the following reason: ' + status );
+                }
+            });
+        });
+    }
+</script>
