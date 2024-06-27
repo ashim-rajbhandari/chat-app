@@ -45,7 +45,7 @@ onMounted(() => {
 
   });
 
-    socket.on('leave-room', (message, userId , userName, type) => {
+  socket.on('leave-room', (message, userId , userName, type) => {
     messages.value.push({ userId: userId, message: message , userName: userName, type:type});
 
     nextTick(() => { 
