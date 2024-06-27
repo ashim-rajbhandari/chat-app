@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, nextTick , onUpdated } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
 import Button from './baseComponents/Button.vue';
 import { socket } from '../socket';
 
@@ -22,6 +22,8 @@ const sendMessage = () => {
   messageInput.value = '';
 };
 
+
+onMounted(() => {
   socket.on('message', (message, userId , userName , type) => {
     messages.value.push({ userId: userId, message: message , userName: userName , type: type});
 
@@ -33,7 +35,6 @@ const sendMessage = () => {
   });
 
   socket.on('join-room', (message, userId , userName , type) => {
-    console.log('asdasd')
     messages.value.push({ userId: userId, message: message , userName: userName , type: type});
 
     nextTick(() => { 
@@ -53,20 +54,7 @@ const sendMessage = () => {
       }
     });
   });
-
-  onMounted(() => {
-    console.log('mounted');
-  })
-
-  onUpdated(() => {
-    console.log('updated');
-  })
-
-  console.log('created');
-
-  
-
-
+})
 </script>
 
 <template>
@@ -101,9 +89,6 @@ const sendMessage = () => {
                   </div>
                 </div>
               </div>
-              
-
-
             </div>
           </div>
           <div class="card-footer">
